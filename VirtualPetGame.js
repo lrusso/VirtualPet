@@ -204,10 +204,9 @@ VirtualPet.Game.prototype = {
 
 		// ADDING THE DOG TONGUE ANIMATION
 		this.dogTongueHandler = this.dogSprite.animations.add("tongue", [ 16, 17, 18, 19, 18, 19, 18, 17, 16]);
-		//this.dogTongueHandler.onStart.add(animationStarted, this);
-		//this.dogTongueHandler.onLoop.add(animationLooped, this);
-		this.dogTongueHandler.onComplete.add(animationStopped, this);
-		function animationStopped(sprite, animation)
+		//this.dogTongueHandler.onStart.add(function(){}, this);
+		//this.dogTongueHandler.onLoop.add(function(){}, this);
+		this.dogTongueHandler.onComplete.add(function()
 			{
 			var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
 			this.dogTongueLastTimeAt = timeStampInMs;
@@ -223,7 +222,7 @@ VirtualPet.Game.prototype = {
 				}
 			this.dogTongueLastWalkingLeft = false;
 			this.dogTongueLastWalkingRight = false;
-			}
+			}, this);
 
 		// ADDING THE DOG SLEEPING ANIMATION
 		this.dogSprite.animations.add("sleep", [ 28, 29]);
