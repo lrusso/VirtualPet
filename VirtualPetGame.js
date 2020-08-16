@@ -229,26 +229,33 @@ VirtualPet.Game.prototype = {
 
 	render: function ()
 		{
-		var algo = Math.random() * 100;
+		// GETTING A RANDOM VALUE (FROM 0 TO 99) FOR HANDLE POSSIBILITIES
+		var randomValue = Math.random() * 100;
 
-		if (algo<0.2)
+		// CHECKING THE RANDOM VALUE FOR MOVING THE DOG UP OR DOWN
+		if (randomValue<0.2)
 			{
+			// CHECKING IF THE DOG IS NOT MOVING UP OR DOWN
 			if (this.dogMovingUp==false && this.dogMovingDown == false)
 				{
+				// CHECKING IF THE DOG IS AT THE TOP OF THE GARDEN
 				if (this.dogSprite.y==this.gardenTopLimit)
 					{
+					// SETTING THAT THE DOG WILL BE MOVING DOWN
 					this.dogMovingDown = true;
 					this.dogMovingUp = false;
 					}
+				// CHECKING IF THE DOG IS AT THE BOTTOM OF THE GARDEN
 				else if (this.dogSprite.y==this.gardenBottomLimit)
 					{
+					// SETTING THAT THE DOG WILL BE MOVING UP
 					this.dogMovingDown = false;
 					this.dogMovingUp = true;
 					}
 				}
 			}
 
-		if (algo<99)
+		if (randomValue<99)
 			{
 			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
 				{
