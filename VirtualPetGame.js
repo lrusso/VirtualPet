@@ -78,6 +78,7 @@ VirtualPet.Game = function (game)
 	this.healthBorder1 = null;
 	this.healthBorder2 = null;
 	this.healthEmpty = null;
+	this.healthMask = null;
 	this.healthValue = null;
 	this.healthCircle = null;
 	this.healthIcon = null;
@@ -129,10 +130,17 @@ VirtualPet.Game.prototype = {
 		this.healthEmpty.drawRoundedRect(30, 11, 128, 25, 11);
 		this.healthContainer.addChild(this.healthEmpty);
 
+		// ADDING THE HEALTH METER MASK
+		this.healthMask = game.add.graphics();
+		this.healthMask.beginFill(0xFFFFFF, 1)
+		this.healthMask.drawRoundedRect(30, 9, 128, 29, 12);
+		this.healthContainer.addChild(this.healthMask);
+
 		// ADDING THE HEALTH METER VALUE
 		this.healthValue = game.add.graphics();
 		this.healthValue.beginFill(0xB9180B, 1);
 		this.healthValue.drawRoundedRect(30, 11, 100, 25, 1);
+		this.healthValue.mask = this.healthMask;
 		this.healthContainer.addChild(this.healthValue);
 
 		// ADDING THE HEALTH ICON BORDER
