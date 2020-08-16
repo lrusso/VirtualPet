@@ -74,6 +74,14 @@ VirtualPet.Game = function (game)
 	this.splash = true;
 	this.dogSprite = null;
 
+	this.statusContainer = null;
+	this.statusBorder1 = null;
+	this.statusBorder2 = null;
+	this.statusEmpty = null;
+	this.statusHealth = null;
+	this.statusCircle = null;
+	this.statusIcon = null;
+
 	// SCALING THE CANVAS SIZE FOR THE GAME
 	function resizeF()
 		{
@@ -101,30 +109,35 @@ VirtualPet.Game.prototype = {
 		// ADDING THE BACKGROUND IMAGE
 		this.add.sprite(0, 0, "backgroundImg");
 
-		// ADDING THE ACTIONS CONTAINER
-		var toastShadow3 = game.add.graphics();
-		toastShadow3.beginFill(0xFFFFFF, 1)
-		toastShadow3.drawRoundedRect(30, 16, 130, 28, 12);
+		this.statusContainer = this.add.sprite(5, 5, "");
 
-		var toastShadow4 = game.add.graphics();
-		toastShadow4.beginFill(0x000000, 1);
-		toastShadow4.drawRoundedRect(30, 18, 128, 24, 11);
+		this.statusBorder1 = game.add.graphics();
+		this.statusBorder1.beginFill(0xFFFFFF, 1)
+		this.statusBorder1.drawRoundedRect(30, 9, 130, 29, 12);
+		this.statusContainer.addChild(this.statusBorder1);
 
-		var toastShadow5 = game.add.graphics();
-		toastShadow5.beginFill(0xB9180B, 1);
-		toastShadow5.drawRoundedRect(30, 18, 100, 24, 1);
+		this.statusEmpty = game.add.graphics();
+		this.statusEmpty.beginFill(0x000000, 1);
+		this.statusEmpty.drawRoundedRect(30, 11, 128, 25, 11);
+		this.statusContainer.addChild(this.statusEmpty);
 
-		// DRAWING CIRCLE
-		var graphics = game.add.graphics(0, 0);
-		graphics.beginFill(0xFFFFFF, 1);
-		graphics.drawCircle(31, 29, 46);
+		this.statusHealth = game.add.graphics();
+		this.statusHealth.beginFill(0xB9180B, 1);
+		this.statusHealth.drawRoundedRect(30, 11, 100, 25, 1);
+		this.statusContainer.addChild(this.statusHealth);
 
-		var graphics = game.add.graphics(0, 0);
-		graphics.beginFill(0xB9180B, 1);
-		graphics.drawCircle(31, 29, 42);
+		this.statusBorder2 = game.add.graphics(0, 0);
+		this.statusBorder2.beginFill(0xFFFFFF, 1);
+		this.statusBorder2.drawCircle(23, 23, 46);
+		this.statusContainer.addChild(this.statusBorder2);
 
-		// ADDING THE HEARTH IMAGE
-		this.add.sprite(17, 17, "hearthImg");
+		this.statusCircle = game.add.graphics(0, 0);
+		this.statusCircle.beginFill(0xB9180B, 1);
+		this.statusCircle.drawCircle(23, 23, 42);
+		this.statusContainer.addChild(this.statusCircle);
+
+		this.statusIcon = game.add.sprite(9, 10.5, "hearthImg");
+		this.statusContainer.addChild(this.statusIcon);
 
 		// ADDING THE ACTIONS CONTAINER
 		var toastShadow2 = game.add.graphics();
