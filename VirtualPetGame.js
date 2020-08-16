@@ -79,6 +79,11 @@ VirtualPet.Game = function (game)
 	this.dogSprite = null;
 	this.dogMovingUp = false;
 	this.dogMovingDown = false;
+	this.dogTongue = false;
+	this.dogTongueHandler = null;
+	this.dogTongueLastWalkingLeft = false;
+	this.dogTongueLastWalkingRight = false;
+	this.dogTongueLastTimeAt = -1;
 
 	this.healthContainer = null;
 	this.healthBorder1 = null;
@@ -196,7 +201,27 @@ VirtualPet.Game.prototype = {
 		this.dogSprite.animations.add("walk_left", [ 12, 13, 14, 15]);
 
 		// ADDING THE DOG TONGUE ANIMATION
-		this.dogSprite.animations.add("tongue", [ 16, 17, 18, 19]);
+		this.dogTongueHandler = this.dogSprite.animations.add("tongue", [ 16, 17, 18, 19, 18, 19, 18, 17, 16]);
+		//this.dogTongueHandler.onStart.add(animationStarted, this);
+		//this.dogTongueHandler.onLoop.add(animationLooped, this);
+		this.dogTongueHandler.onComplete.add(animationStopped, this);
+		function animationStopped(sprite, animation)
+			{
+			var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+			this.dogTongueLastTimeAt = timeStampInMs;
+
+			this.dogTongue = false;
+			if (this.dogTongueLastWalkingLeft==true)
+				{
+				this.dogSprite.animations.play("walk_left", 6, true);
+				}
+			else
+				{
+				this.dogSprite.animations.play("walk_right", 6, true);
+				}
+			this.dogTongueLastWalkingLeft = false;
+			this.dogTongueLastWalkingRight = false;
+			}
 
 		// ADDING THE DOG SLEEPING ANIMATION
 		this.dogSprite.animations.add("sleep", [ 28, 29]);
@@ -232,11 +257,34 @@ VirtualPet.Game.prototype = {
 		// GETTING A RANDOM VALUE (FROM 0 TO 99) FOR HANDLE POSSIBILITIES
 		var randomValue = Math.random() * 100;
 
-		// CHECKING THE RANDOM VALUE FOR MOVING THE DOG UP OR DOWN
 		if (randomValue<0.2)
 			{
+			if (this.dogMovingDown == false && this.dogMovingUp==false && this.dogTongue == false)
+				{
+				var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+				if (timeStampInMs>this.dogTongueLastTimeAt+5000)
+					{
+					if (this.dogSprite.animations.currentAnim.name=="walk_left")
+						{
+						this.dogTongueLastWalkingLeft = true;
+						}
+					else
+						{
+						this.dogTongueLastWalkingRight = true;
+						}
+					this.dogSprite.animations.play("tongue", 6, false);
+					this.dogMovingDown = false;
+					this.dogMovingUp = false;
+					this.dogTongue = true;
+					}
+				}
+			}
+
+		// CHECKING THE RANDOM VALUE FOR MOVING THE DOG UP OR DOWN
+		if (randomValue<1)
+			{
 			// CHECKING IF THE DOG IS NOT MOVING UP OR DOWN
-			if (this.dogMovingUp==false && this.dogMovingDown == false)
+			if (this.dogMovingUp==false && this.dogMovingDown == false && this.dogTongue == false)
 				{
 				// CHECKING IF THE DOG IS AT THE TOP OF THE GARDEN
 				if (this.dogSprite.y==this.gardenTopLimit)
