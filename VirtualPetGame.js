@@ -231,13 +231,13 @@ VirtualPet.Game.prototype = {
 		// CHECKING IF THE DOG REACHED THE RIGHT LIMIT OF THE SCREEN
 		if (this.dogSprite.x > 550)
 			{
-			// MAKING THE DOG TO GO TO THE LEFT
+			// SETTING THAT THE DOG WILL BE WALKING TO THE LEFT
 			this.dogSprite.animations.play("walk_left", 6, true);
 			}
 		// CHECKING IF THE DOG REACHED THE LEFT LIMIT OF THE SCREEN
 		else if (this.dogSprite.x < 50)
 			{
-			// MAKING THE DOG TO GO TO THE RIGHT
+			// SETTING THAT THE DOG WILL BE WALKING TO THE RIGHT
 			this.dogSprite.animations.play("walk_right", 6, true);
 			}
 		}
