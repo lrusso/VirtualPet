@@ -82,6 +82,11 @@ VirtualPet.Game = function (game)
 	this.healthCircle = null;
 	this.healthIcon = null;
 
+	this.actionsContainer = null;
+	this.actionsBackground = null;
+	this.actionsFood = null;
+	this.actionsDisc = null;
+
 	// SCALING THE CANVAS SIZE FOR THE GAME
 	function resizeF()
 		{
@@ -110,7 +115,7 @@ VirtualPet.Game.prototype = {
 		this.add.sprite(0, 0, "backgroundImg");
 
 		// ADDING THE HEALTH CONTAINER
-		this.healthContainer = this.add.sprite(5, 5, "");
+		this.healthContainer = game.add.sprite(5, 5, "");
 
 		// ADDING THE HEALTH METER BORDER
 		this.healthBorder1 = game.add.graphics();
@@ -147,15 +152,21 @@ VirtualPet.Game.prototype = {
 		this.healthContainer.addChild(this.healthIcon);
 
 		// ADDING THE ACTIONS CONTAINER
-		var toastShadow2 = game.add.graphics();
-		toastShadow2.beginFill(0x000000, 0.4);
-		toastShadow2.drawRoundedRect(620, -10, 190, 84, 10);
+		this.actionsContainer = game.add.sprite(625, 0, "");
+
+		// ADDING THE ACTIONS BACKGROUND
+		this.actionsBackground = game.add.graphics();
+		this.actionsBackground.beginFill(0x000000, 0.4);
+		this.actionsBackground.drawRoundedRect(0, -10, 190, 84, 10);
+		this.actionsContainer.addChild(this.actionsBackground);
 
 		// ADDING THE FOOD IMAGE
-		this.add.sprite(635, 5, "foodImg");
+		this.actionsFood = game.add.sprite(10, 5, "foodImg");
+		this.actionsContainer.addChild(this.actionsFood);
 
 		// ADDING THE DISC IMAGE
-		this.add.sprite(720, 5, "discImg");
+		this.actionsDisc = game.add.sprite(95, 5, "discImg");
+		this.actionsContainer.addChild(this.actionsDisc);
 
 		// ADDING THE DOG SPRITE
 		this.dogSprite = game.add.sprite(300, 220, "dog");
