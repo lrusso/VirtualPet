@@ -102,13 +102,13 @@ VirtualPet.Game.prototype = {
 		// ADDING THE ACTIONS CONTAINER
 		var toastShadow2 = game.add.graphics();
 		toastShadow2.beginFill(0x000000, 0.4);
-		toastShadow2.drawRoundedRect(625, -10, 190, 74, 10);
-
-		// ADDING THE DISC IMAGE
-		this.add.sprite(720, 0, "discImg");
+		toastShadow2.drawRoundedRect(620, -10, 190, 84, 10);
 
 		// ADDING THE FOOD IMAGE
-		this.add.sprite(635, 0, "foodImg");
+		this.add.sprite(635, 5, "foodImg");
+
+		// ADDING THE DISC IMAGE
+		this.add.sprite(720, 5, "discImg");
 
 		// ADDING THE DOG SPRITE
 		this.dogSprite = game.add.sprite(300, 220, "dog");
