@@ -208,16 +208,25 @@ VirtualPet.Game.prototype = {
 		//this.dogTongueHandler.onLoop.add(function(){}, this);
 		this.dogTongueHandler.onComplete.add(function()
 			{
+			// SETTING THE CURRENT TIMESTAMP WHEN THE DOG STUCK OUT HIS TONGUE
 			this.dogTongueLastTimeAt = this.getCurrentTime();
+
+			// SETTING THAT THE TONGUE EVENT IS DONE
 			this.dogTongue = false;
+
+			// CHECKING IF THE LAST WALKING DIRECTION WAS TO THE LEFT
 			if (this.dogTongueLastWalkingLeft==true)
 				{
+				// SETTING THAT THE DOG WILL BE WALKING TO THE LEFT
 				this.actionWalkLeft();
 				}
 			else
 				{
+				// SETTING THAT THE DOG WILL BE WALKING TO THE RIGHT
 				this.actionWalkRight();
 				}
+
+			// CLEARING THE DOG TONGUE WALKING LEFT/RIGHT VARIABLES
 			this.dogTongueLastWalkingLeft = false;
 			this.dogTongueLastWalkingRight = false;
 			}, this);
