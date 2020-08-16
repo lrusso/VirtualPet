@@ -293,10 +293,12 @@ VirtualPet.Game.prototype = {
 		// CHECKING THE CURRENT DOG ANIMATION AND UPDATING THE DOG POSITION
 		if (this.dogSprite.animations.currentAnim.name=="walk_right")
 			{
+			// MOVING THE DOG ONE PIXEL TO THE RIGHT WHILE THE "WALK_RIGHT" ANIMATION IS HAPPENING
 			this.dogSprite.x = this.dogSprite.x + 1;
 			}
 		else if (this.dogSprite.animations.currentAnim.name=="walk_left")
 			{
+			// MOVING THE DOG ONE PIXEL TO THE LEFT WHILE THE "WALK_LEFT" ANIMATION IS HAPPENING
 			this.dogSprite.x = this.dogSprite.x - 1;
 			}
 
