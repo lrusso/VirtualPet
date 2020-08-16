@@ -104,20 +104,20 @@ VirtualPet.Game.prototype = {
 		// ADDING THE ACTIONS CONTAINER
 		var toastShadow3 = game.add.graphics();
 		toastShadow3.beginFill(0xFFFFFF, 1)
-		toastShadow3.drawRoundedRect(30, 15, 130, 28, 12);
+		toastShadow3.drawRoundedRect(30, 16, 130, 28, 12);
 
 		var toastShadow4 = game.add.graphics();
 		toastShadow4.beginFill(0x000000, 1);
-		toastShadow4.drawRoundedRect(30, 17, 128, 24, 11);
+		toastShadow4.drawRoundedRect(30, 18, 128, 24, 11);
 
 		var toastShadow5 = game.add.graphics();
 		toastShadow5.beginFill(0xB9180B, 1);
-		toastShadow5.drawRoundedRect(30, 17, 100, 24, 1);
+		toastShadow5.drawRoundedRect(30, 18, 100, 24, 1);
 
 		// DRAWING CIRCLE
 		var graphics = game.add.graphics(0, 0);
 		graphics.beginFill(0xFFFFFF, 1);
-		graphics.drawCircle(31, 29, 45);
+		graphics.drawCircle(31, 29, 46);
 
 		var graphics = game.add.graphics(0, 0);
 		graphics.beginFill(0xB9180B, 1);
