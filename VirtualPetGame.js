@@ -208,9 +208,7 @@ VirtualPet.Game.prototype = {
 		//this.dogTongueHandler.onLoop.add(function(){}, this);
 		this.dogTongueHandler.onComplete.add(function()
 			{
-			var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
-			this.dogTongueLastTimeAt = timeStampInMs;
-
+			this.dogTongueLastTimeAt = this.getCurrentTime();
 			this.dogTongue = false;
 			if (this.dogTongueLastWalkingLeft==true)
 				{
@@ -257,8 +255,7 @@ VirtualPet.Game.prototype = {
 		{
 		if (this.dogSleeping==true)
 			{
-			var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
-			if (timeStampInMs>this.dogSleepingSince+10000)
+			if (this.getCurrentTime()>this.dogSleepingSince+10000)
 				{
 				this.dogSleeping = false;
 				this.actionWalkRight();
@@ -349,8 +346,7 @@ VirtualPet.Game.prototype = {
 		{
 		if (this.dogMovingDown == false && this.dogMovingUp == false && this.dogTongue == false && this.dogSleeping == false)
 			{
-			var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
-			if (timeStampInMs>this.dogTongueLastTimeAt+5000)
+			if (this.getCurrentTime()>this.dogTongueLastTimeAt+5000)
 				{
 				if (this.dogSprite.animations.currentAnim.name=="walk_left")
 					{
@@ -396,7 +392,7 @@ VirtualPet.Game.prototype = {
 			{
 			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
 				{
-				var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+				var timeStampInMs = this.getCurrentTime();
 				if (timeStampInMs>this.dogSleepingSince+30000)
 					{
 					this.dogSleepingSince = timeStampInMs;
@@ -408,6 +404,11 @@ VirtualPet.Game.prototype = {
 				}
 			}
 		},
+
+	getCurrentTime: function()
+		{
+		return window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+		}
 	};
 
 // CREATING THE GAME INSTANCE
