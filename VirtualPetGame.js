@@ -72,7 +72,13 @@ VirtualPet.Game = function (game)
 	{
 	this.background = null;
 	this.splash = true;
+
+	this.gardenTopLimit = 185;
+	this.gardenBottomLimit = 260;
+
 	this.dogSprite = null;
+	this.dogMovingUp = false;
+	this.dogMovingDown = false;
 
 	this.healthContainer = null;
 	this.healthBorder1 = null;
@@ -177,11 +183,11 @@ VirtualPet.Game.prototype = {
 		this.actionsContainer.addChild(this.actionsDisc);
 
 		// ADDING THE DOG SPRITE
-		this.dogSprite = game.add.sprite(300, 220, "dog");
+		this.dogSprite = game.add.sprite(300, this.gardenBottomLimit, "dog");
 
 		// SETTING THE DOG SCALE
-		this.dogSprite.scale.x = 5;
-		this.dogSprite.scale.y = 5;
+		this.dogSprite.scale.x = 4;
+		this.dogSprite.scale.y = 4;
 
 		// ADDING THE DOG WALK RIGHT ANIMATION
 		this.dogSprite.animations.add("walk_right", [ 4, 5, 6, 7]);
@@ -192,11 +198,8 @@ VirtualPet.Game.prototype = {
 		// ADDING THE DOG TONGUE ANIMATION
 		this.dogSprite.animations.add("tongue", [ 16, 17, 18, 19]);
 
-		// ADDING THE DOG GOING TO SLEEP ANIMATION
-		this.dogSprite.animations.add("sleep_going", [ 27]);
-
 		// ADDING THE DOG SLEEPING ANIMATION
-		this.dogSprite.animations.add("sleep_full", [ 28, 29]);
+		this.dogSprite.animations.add("sleep", [ 28, 29]);
 
 		// PLAYING THE DOG WALK ANIMATION
 		this.dogSprite.animations.play("walk_right", 6, true);
@@ -209,8 +212,8 @@ VirtualPet.Game.prototype = {
 			toastShadow.beginFill(0x000000, 0.4);
 			var toastText = game.add.text(0, 0, STRING_ABOUT, { font: "bold 24px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" });
 			toastText.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
-			toastText.setTextBounds(0, 380, 800, 55);
-			toastShadow.drawRoundedRect(800 / 2 - toastText._width / 2 - 11, 383, toastText._width + 23, 46, 10);
+			toastText.setTextBounds(0, 395, 800, 55);
+			toastShadow.drawRoundedRect(800 / 2 - toastText._width / 2 - 11, 398, toastText._width + 23, 46, 10);
 
 			// SETTING THAT IN 3 SECONDS THE SPLASH MUST FADE OUT
 			setTimeout(function()
@@ -226,6 +229,60 @@ VirtualPet.Game.prototype = {
 
 	render: function ()
 		{
+		var algo = Math.random() * 100;
+
+		if (algo<0.2)
+			{
+			if (this.dogMovingUp==false && this.dogMovingDown == false)
+				{
+				if (this.dogSprite.y==this.gardenTopLimit)
+					{
+					this.dogMovingDown = true;
+					this.dogMovingUp = false;
+					}
+				else if (this.dogSprite.y==this.gardenBottomLimit)
+					{
+					this.dogMovingDown = false;
+					this.dogMovingUp = true;
+					}
+				}
+			}
+
+		if (algo<99)
+			{
+			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
+				{
+				this.dogSprite.animations.play("sleep", 1, false);
+				this.dogMovingDown = false;
+				this.dogMovingUp = false;
+				}
+			}
+
+		if (this.dogMovingUp==true)
+			{
+			if (this.dogSprite.y>this.gardenTopLimit)
+				{
+				this.dogSprite.y = this.dogSprite.y - 1;
+				}
+				else
+				{
+				this.dogMovingUp = false;
+				this.dogMovingDown = false;
+				}
+			}
+		else if (this.dogMovingDown==true)
+			{
+			if (this.dogSprite.y<this.gardenBottomLimit)
+				{
+				this.dogSprite.y = this.dogSprite.y + 1;
+				}
+				else
+				{
+				this.dogMovingUp = false;
+				this.dogMovingDown = false;
+				}
+			}
+
 		// CHECKING THE CURRENT DOG ANIMATION AND UPDATING THE DOG POSITION
 		if (this.dogSprite.animations.currentAnim.name=="walk_right")
 			{
