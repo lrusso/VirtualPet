@@ -70,6 +70,7 @@ VirtualPet.Preloader.prototype = {
 
 VirtualPet.Game = function (game)
 	{
+	this.background = null;
 	this.splash = true;
 	this.dogSprite = null;
 
@@ -111,7 +112,7 @@ VirtualPet.Game.prototype = {
 	create: function ()
 		{
 		// ADDING THE BACKGROUND IMAGE
-		this.add.sprite(0, 0, "backgroundImg");
+		this.background = game.add.sprite(0, 0, "backgroundImg");
 
 		// ADDING THE HEALTH CONTAINER
 		this.healthContainer = game.add.sprite(5, 5, "");
@@ -217,6 +218,7 @@ VirtualPet.Game.prototype = {
 
 	render: function ()
 		{
+		// CHECKING THE CURRENT DOG ANIMATION AND UPDATING THE DOG POSITION
 		if (this.dogSprite.animations.currentAnim.name=="walk_right")
 			{
 			this.dogSprite.x = this.dogSprite.x + 1;
@@ -226,12 +228,16 @@ VirtualPet.Game.prototype = {
 			this.dogSprite.x = this.dogSprite.x - 1;
 			}
 
+		// CHECKING IF THE DOG REACHED THE RIGHT LIMIT OF THE SCREEN
 		if (this.dogSprite.x > 550)
 			{
+			// MAKING THE DOG TO GO TO THE LEFT
 			this.dogSprite.animations.play("walk_left", 6, true);
 			}
+		// CHECKING IF THE DOG REACHED THE LEFT LIMIT OF THE SCREEN
 		else if (this.dogSprite.x < 50)
 			{
+			// MAKING THE DOG TO GO TO THE RIGHT
 			this.dogSprite.animations.play("walk_right", 6, true);
 			}
 		}
