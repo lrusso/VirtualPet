@@ -270,67 +270,9 @@ VirtualPet.Game.prototype = {
 			// GETTING A RANDOM VALUE (FROM 0 TO 99) FOR HANDLE POSSIBILITIES
 			var randomValue = Math.random() * 100;
 
-			if (randomValue<0.2)
-				{
-				if (this.dogMovingDown == false && this.dogMovingUp==false && this.dogTongue == false)
-					{
-					var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
-					if (timeStampInMs>this.dogTongueLastTimeAt+5000)
-						{
-						if (this.dogSprite.animations.currentAnim.name=="walk_left")
-							{
-							this.dogTongueLastWalkingLeft = true;
-							}
-						else
-							{
-							this.dogTongueLastWalkingRight = true;
-							}
-						this.actionTongue();
-						this.dogMovingDown = false;
-						this.dogMovingUp = false;
-						this.dogTongue = true;
-						}
-					}
-				}
-
-			// CHECKING THE RANDOM VALUE FOR MOVING THE DOG UP OR DOWN
-			if (randomValue<1)
-				{
-				// CHECKING IF THE DOG IS NOT MOVING UP OR DOWN
-				if (this.dogMovingUp==false && this.dogMovingDown == false && this.dogTongue == false)
-					{
-					// CHECKING IF THE DOG IS AT THE TOP OF THE GARDEN
-					if (this.dogSprite.y==this.gardenTopLimit)
-						{
-						// SETTING THAT THE DOG WILL BE MOVING DOWN
-						this.dogMovingDown = true;
-						this.dogMovingUp = false;
-						}
-					// CHECKING IF THE DOG IS AT THE BOTTOM OF THE GARDEN
-					else if (this.dogSprite.y==this.gardenBottomLimit)
-						{
-						// SETTING THAT THE DOG WILL BE MOVING UP
-						this.dogMovingDown = false;
-						this.dogMovingUp = true;
-						}
-					}
-				}
-
-			if (randomValue<99)
-				{
-				if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
-					{
-					var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
-					if (timeStampInMs>this.dogSleepingSince+30000)
-						{
-						this.dogSleepingSince = timeStampInMs;
-						this.dogSleeping = true;
-						this.actionSleep();
-						this.dogMovingDown = false;
-						this.dogMovingUp = false;
-						}
-					}
-				}
+			if (randomValue<0.2) 		{this.checkForTongue()}
+			else if (randomValue<0.5)	{this.checkForUpOrDown()}
+			else if (randomValue<99)	{this.checkForSleep()}
 
 			if (this.dogMovingUp==true)
 				{
@@ -402,7 +344,71 @@ VirtualPet.Game.prototype = {
 	actionTongue: function()
 		{
 		this.dogSprite.animations.play("tongue", 6, false);
-		}
+		},
+
+	checkForTongue: function()
+		{
+		if (this.dogMovingDown == false && this.dogMovingUp == false && this.dogTongue == false && this.dogSleeping == false)
+			{
+			var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+			if (timeStampInMs>this.dogTongueLastTimeAt+5000)
+				{
+				if (this.dogSprite.animations.currentAnim.name=="walk_left")
+					{
+					this.dogTongueLastWalkingLeft = true;
+					}
+				else
+					{
+					this.dogTongueLastWalkingRight = true;
+					}
+				this.actionTongue();
+				this.dogMovingDown = false;
+				this.dogMovingUp = false;
+				this.dogTongue = true;
+				}
+			}
+		},
+
+	checkForUpOrDown: function()
+		{
+		// CHECKING IF THE DOG IS NOT MOVING UP OR DOWN
+		if (this.dogMovingDown == false && this.dogMovingUp == false && this.dogTongue == false && this.dogSleeping == false)
+			{
+			// CHECKING IF THE DOG IS AT THE TOP OF THE GARDEN
+			if (this.dogSprite.y==this.gardenTopLimit)
+				{
+				// SETTING THAT THE DOG WILL BE MOVING DOWN
+				this.dogMovingDown = true;
+				this.dogMovingUp = false;
+				}
+			// CHECKING IF THE DOG IS AT THE BOTTOM OF THE GARDEN
+			else if (this.dogSprite.y==this.gardenBottomLimit)
+				{
+				// SETTING THAT THE DOG WILL BE MOVING UP
+				this.dogMovingDown = false;
+				this.dogMovingUp = true;
+				}
+			}
+		},
+
+	checkForSleep: function()
+		{
+		if (this.dogMovingDown == false && this.dogMovingUp == false && this.dogTongue == false && this.dogSleeping == false)
+			{
+			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
+				{
+				var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+				if (timeStampInMs>this.dogSleepingSince+30000)
+					{
+					this.dogSleepingSince = timeStampInMs;
+					this.dogSleeping = true;
+					this.actionSleep();
+					this.dogMovingDown = false;
+					this.dogMovingUp = false;
+					}
+				}
+			}
+		},
 	};
 
 // CREATING THE GAME INSTANCE
