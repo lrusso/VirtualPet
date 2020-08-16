@@ -196,14 +196,14 @@ VirtualPet.Game.prototype = {
 		this.dogSprite.scale.x = 4;
 		this.dogSprite.scale.y = 4;
 
-		// ADDING THE DOG WALK RIGHT ANIMATION
-		this.dogSprite.animations.add("walk_right", [ 4, 5, 6, 7]);
+		// ADDING THE DOG WALK RIGHT ANIMATION AND SETTING ALL THE REQUIRED FRAMES FROM THE DOG SPRITESHEET
+		this.dogSprite.animations.add("walk_right", [4, 5, 6, 7]);
 
-		// ADDING THE DOG WALK LEFT ANIMATION
-		this.dogSprite.animations.add("walk_left", [ 12, 13, 14, 15]);
+		// ADDING THE DOG WALK LEFT ANIMATION AND SETTING ALL THE REQUIRED FRAMES FROM THE DOG SPRITESHEET
+		this.dogSprite.animations.add("walk_left", [12, 13, 14, 15]);
 
-		// ADDING THE DOG TONGUE ANIMATION
-		this.dogTongueHandler = this.dogSprite.animations.add("tongue", [ 16, 17, 18, 19, 18, 19, 18, 17, 16]);
+		// ADDING THE DOG TONGUE ANIMATION AND SETTING ALL THE REQUIRED FRAMES FROM THE DOG SPRITESHEET
+		this.dogTongueHandler = this.dogSprite.animations.add("tongue", [16, 17, 18, 19, 18, 19, 18, 17, 16]);
 		//this.dogTongueHandler.onStart.add(function(){}, this);
 		//this.dogTongueHandler.onLoop.add(function(){}, this);
 		this.dogTongueHandler.onComplete.add(function()
@@ -222,8 +222,8 @@ VirtualPet.Game.prototype = {
 			this.dogTongueLastWalkingRight = false;
 			}, this);
 
-		// ADDING THE DOG SLEEPING ANIMATION
-		this.dogSprite.animations.add("sleep", [ 28, 29]);
+		// ADDING THE DOG SLEEPING ANIMATION AND SETTING ALL THE REQUIRED FRAMES FROM THE DOG SPRITESHEET
+		this.dogSprite.animations.add("sleep", [28, 29]);
 
 		// PLAYING THE DOG WALK ANIMATION
 		this.actionWalkRight();
