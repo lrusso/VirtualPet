@@ -213,11 +213,11 @@ VirtualPet.Game.prototype = {
 			this.dogTongue = false;
 			if (this.dogTongueLastWalkingLeft==true)
 				{
-				this.dogSprite.animations.play("walk_left", 6, true);
+				this.actionWalkLeft();
 				}
 			else
 				{
-				this.dogSprite.animations.play("walk_right", 6, true);
+				this.actionWalkRight();
 				}
 			this.dogTongueLastWalkingLeft = false;
 			this.dogTongueLastWalkingRight = false;
@@ -227,7 +227,7 @@ VirtualPet.Game.prototype = {
 		this.dogSprite.animations.add("sleep", [ 28, 29]);
 
 		// PLAYING THE DOG WALK ANIMATION
-		this.dogSprite.animations.play("walk_right", 6, true);
+		this.actionWalkRight();
 
 		// CHECKING IF THE SPLASH MUST BE DISPLAYED
 		if (this.splash==true)
@@ -272,7 +272,7 @@ VirtualPet.Game.prototype = {
 						{
 						this.dogTongueLastWalkingRight = true;
 						}
-					this.dogSprite.animations.play("tongue", 6, false);
+					this.actionTongue();
 					this.dogMovingDown = false;
 					this.dogMovingUp = false;
 					this.dogTongue = true;
@@ -307,7 +307,7 @@ VirtualPet.Game.prototype = {
 			{
 			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
 				{
-				this.dogSprite.animations.play("sleep", 1, false);
+				this.actionSleep();
 				this.dogMovingDown = false;
 				this.dogMovingUp = false;
 				}
@@ -354,14 +354,34 @@ VirtualPet.Game.prototype = {
 		if (this.dogSprite.x > 550)
 			{
 			// SETTING THAT THE DOG WILL BE WALKING TO THE LEFT
-			this.dogSprite.animations.play("walk_left", 6, true);
+			this.actionWalkLeft();
 			}
 		// CHECKING IF THE DOG REACHED THE LEFT LIMIT OF THE SCREEN
 		else if (this.dogSprite.x < 50)
 			{
 			// SETTING THAT THE DOG WILL BE WALKING TO THE RIGHT
-			this.dogSprite.animations.play("walk_right", 6, true);
+			this.actionWalkRight();
 			}
+		},
+
+	actionWalkLeft: function()
+		{
+		this.dogSprite.animations.play("walk_left", 6, true);
+		},
+
+	actionWalkRight: function()
+		{
+		this.dogSprite.animations.play("walk_right", 6, true);
+		},
+
+	actionSleep: function()
+		{
+		this.dogSprite.animations.play("sleep", 1, false);
+		},
+
+	actionTongue: function()
+		{
+		this.dogSprite.animations.play("tongue", 6, false);
 		}
 	};
 
