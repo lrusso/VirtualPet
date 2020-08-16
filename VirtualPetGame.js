@@ -269,7 +269,7 @@ VirtualPet.Game.prototype = {
 			{
 			if (this.dogSprite.y>this.gardenTopLimit)
 				{
-				this.dogSprite.y = this.dogSprite.y - 1;
+				this.dogSprite.y = this.dogSprite.y - 0.5;
 				}
 				else
 				{
@@ -281,7 +281,7 @@ VirtualPet.Game.prototype = {
 			{
 			if (this.dogSprite.y<this.gardenBottomLimit)
 				{
-				this.dogSprite.y = this.dogSprite.y + 1;
+				this.dogSprite.y = this.dogSprite.y + 0.5;
 				}
 				else
 				{
