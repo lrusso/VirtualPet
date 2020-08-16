@@ -174,11 +174,23 @@ VirtualPet.Game.prototype = {
 		this.dogSprite.scale.x = 5;
 		this.dogSprite.scale.y = 5;
 
-		// ADDING THE DOG WALK ANIMATION
-		this.dogSprite.animations.add("walk");
+		// ADDING THE DOG WALK RIGHT ANIMATION
+		this.dogSprite.animations.add("walk_right", [ 4, 5, 6, 7]);
+
+		// ADDING THE DOG WALK LEFT ANIMATION
+		this.dogSprite.animations.add("walk_left", [ 12, 13, 14, 15]);
+
+		// ADDING THE DOG TONGUE ANIMATION
+		this.dogSprite.animations.add("tongue", [ 16, 17, 18, 19]);
+
+		// ADDING THE DOG GOING TO SLEEP ANIMATION
+		this.dogSprite.animations.add("sleep_going", [ 27]);
+
+		// ADDING THE DOG SLEEPING ANIMATION
+		this.dogSprite.animations.add("sleep_full", [ 28, 29]);
 
 		// PLAYING THE DOG WALK ANIMATION
-		this.dogSprite.animations.play("walk", 5, false);
+		this.dogSprite.animations.play("walk_right", 6, true);
 
 		// CHECKING IF THE SPLASH MUST BE DISPLAYED
 		if (this.splash==true)
@@ -205,11 +217,22 @@ VirtualPet.Game.prototype = {
 
 	render: function ()
 		{
-		// CHECKING THE DOG SPRITE POSITION
-		if (this.dogSprite.x < 400)
+		if (this.dogSprite.animations.currentAnim.name=="walk_right")
 			{
-			// UPDATING THE POSITION
 			this.dogSprite.x = this.dogSprite.x + 1;
+			}
+		else if (this.dogSprite.animations.currentAnim.name=="walk_left")
+			{
+			this.dogSprite.x = this.dogSprite.x - 1;
+			}
+
+		if (this.dogSprite.x > 550)
+			{
+			this.dogSprite.animations.play("walk_left", 6, true);
+			}
+		else if (this.dogSprite.x < 50)
+			{
+			this.dogSprite.animations.play("walk_right", 6, true);
 			}
 		}
 	};
