@@ -272,9 +272,9 @@ VirtualPet.Game.prototype = {
 			// GETTING A RANDOM VALUE (FROM 0 TO 99) FOR HANDLE POSSIBILITIES
 			var randomValue = Math.random() * 100;
 
-			if (randomValue<0.2) 		{this.checkForTongue()}
+			if (randomValue<0.2)		{this.checkForTongue()}
 			else if (randomValue<0.5)	{this.checkForUpOrDown()}
-			else if (randomValue<99)	{this.checkForSleep()}
+			else if (randomValue<100)	{this.checkForSleep()}
 
 			if (this.dogMovingUp==true)
 				{
