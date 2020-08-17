@@ -262,15 +262,8 @@ VirtualPet.Game.prototype = {
 
 	render: function ()
 		{
-		if (this.dogSleeping==true)
-			{
-			if (this.getCurrentTime()>this.dogSleepingSince+10000)
-				{
-				this.dogSleeping = false;
-				this.actionWalkRight();
-				}
-			}
-			else
+		// CHECKING IF THE DOG IS NOT SLEEPING IN ORDER TO PERFORM ANOTHER ACTION
+		if (this.isDogSleeping()==false)
 			{
 			// GETTING A RANDOM VALUE (FROM 0 TO 99) FOR HANDLE POSSIBILITIES
 			var randomValue = Math.random() * 100;
@@ -412,6 +405,20 @@ VirtualPet.Game.prototype = {
 					}
 				}
 			}
+		},
+
+	isDogSleeping: function()
+		{
+		if (this.dogSleeping==true)
+			{
+			if (this.getCurrentTime()>this.dogSleepingSince+10000)
+				{
+				this.dogSleeping = false;
+				this.actionWalkRight();
+				}
+			return true;
+			}
+		return false;
 		},
 
 	getCurrentTime: function()
