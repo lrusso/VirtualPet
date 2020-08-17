@@ -138,10 +138,10 @@ VirtualPet.Game.prototype = {
 		this.stage.backgroundColor = "#61b2ff";
 
 		// ADDING THE HEALTH CONTAINER
-		this.cloud1 = game.add.sprite(255, 35, "cloudImg");
-		this.cloud2 = game.add.sprite(440, 5, "cloudImg");
-		this.cloud3 = game.add.sprite(600, 55, "cloudImg");
-		this.cloud4 = game.add.sprite(780, 5, "cloudImg");
+		this.cloud1 = game.add.sprite(100, 5, "cloudImg");
+		this.cloud2 = game.add.sprite(300, 35, "cloudImg");
+		this.cloud3 = game.add.sprite(500, 5, "cloudImg");
+		this.cloud4 = game.add.sprite(700, 35, "cloudImg");
 
 		// ADDING THE BACKGROUND IMAGE
 		this.background = game.add.sprite(0, 0, "backgroundImg");
@@ -288,10 +288,10 @@ VirtualPet.Game.prototype = {
 
 	render: function ()
 		{
-		if (this.cloud1.x>0){this.cloud1.x = this.cloud1.x - 0.25;}else{this.cloud1.x = 900;}
-		if (this.cloud2.x>0){this.cloud2.x = this.cloud2.x - 0.25;}else{this.cloud2.x = 900;}
-		if (this.cloud3.x>0){this.cloud3.x = this.cloud3.x - 0.25;}else{this.cloud3.x = 900;}
-		if (this.cloud4.x>0){this.cloud4.x = this.cloud4.x - 0.25;}else{this.cloud4.x = 900;}
+		if (this.cloud1.x>0){this.cloud1.x = this.cloud1.x - 0.25;}else{this.cloud1.x = 800;}
+		if (this.cloud2.x>0){this.cloud2.x = this.cloud2.x - 0.25;}else{this.cloud2.x = 800;}
+		if (this.cloud3.x>0){this.cloud3.x = this.cloud3.x - 0.25;}else{this.cloud3.x = 800;}
+		if (this.cloud4.x>0){this.cloud4.x = this.cloud4.x - 0.25;}else{this.cloud4.x = 800;}
 
 		// CHECKING IF THE DOG IS NOT SLEEPING IN ORDER TO PERFORM ANOTHER ACTION
 		if (this.isDogSleeping()==false)
