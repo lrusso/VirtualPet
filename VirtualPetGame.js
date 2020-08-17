@@ -346,7 +346,7 @@ VirtualPet.Game.prototype = {
 
 	checkForTongue: function()
 		{
-		if (this.dogMovingDown == false && this.dogMovingUp == false && this.dogTongue == false && this.dogSleeping == false)
+		if (this.isDogInAction()==false)
 			{
 			if (this.getCurrentTime()>this.dogTongueLastTimeAt+5000)
 				{
@@ -369,7 +369,7 @@ VirtualPet.Game.prototype = {
 	checkForUpOrDown: function()
 		{
 		// CHECKING IF THE DOG IS NOT MOVING UP OR DOWN
-		if (this.dogMovingDown == false && this.dogMovingUp == false && this.dogTongue == false && this.dogSleeping == false)
+		if (this.isDogInAction()==false)
 			{
 			// CHECKING IF THE DOG IS AT THE TOP OF THE GARDEN
 			if (this.dogSprite.y==this.gardenTopLimit)
@@ -390,12 +390,12 @@ VirtualPet.Game.prototype = {
 
 	checkForSleep: function()
 		{
-		if (this.dogMovingDown == false && this.dogMovingUp == false && this.dogTongue == false && this.dogSleeping == false)
+		if (this.isDogInAction()==false)
 			{
 			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
 				{
 				var timeStampInMs = this.getCurrentTime();
-				if (timeStampInMs>this.dogSleepingSince+30000)
+				if (timeStampInMs>this.dogSleepingSince+60000)
 					{
 					this.dogSleepingSince = timeStampInMs;
 					this.dogSleeping = true;
@@ -419,6 +419,18 @@ VirtualPet.Game.prototype = {
 			return true;
 			}
 		return false;
+		},
+
+	isDogInAction: function()
+		{
+		if (this.dogMovingDown == false && this.dogMovingUp == false && this.dogTongue == false && this.dogSleeping == false)
+			{
+			return false;
+			}
+			else
+			{
+			return true;
+			}
 		},
 
 	getCurrentTime: function()
