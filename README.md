@@ -8,7 +8,7 @@ Virtual Pet developed in JavaScript.
 
 https://lrusso.github.io/VirtualPet/VirtualPet.htm
 
-## Note - How to patch spritesheets for WebGL
+## Note 1 - How to patch spritesheets for WebGL
 
 *  Installing the repository (https://github.com/sporadic-labs/tile-extruder):
 
@@ -27,4 +27,14 @@ tile-extruder --tileWidth 32 --tileHeight 32 --input ./originalSpritesheet.png -
 ```diff
 -this.load.spritesheet("dog", dogSprite, 32, 32, 30);
 +this.load.spritesheet("dog", dogSprite, 32, 32, 30, 1, 2);
+```
+
+## Note 2 - How to crop a sprite
+
+```javascript
+var mySprite = game.add.sprite(0, 0, 'dog');
+
+var cropRect = new Phaser.Rectangle(0, 0, 128, 128);
+
+mySprite.crop(cropRect);
 ```
