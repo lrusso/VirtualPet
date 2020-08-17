@@ -213,6 +213,8 @@ VirtualPet.Game.prototype = {
 
 			// SETTING THAT THE TONGUE EVENT IS DONE
 			this.dogTongue = false;
+
+			// SETTING THAT THE DOG WILL NOT BE MOVING UP OR DOWN
 			this.dogMovingUp = false;
 			this.dogMovingDown = false;
 
