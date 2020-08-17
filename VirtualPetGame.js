@@ -213,6 +213,8 @@ VirtualPet.Game.prototype = {
 
 			// SETTING THAT THE TONGUE EVENT IS DONE
 			this.dogTongue = false;
+			this.dogMovingUp = false;
+			this.dogMovingDown = false;
 
 			// CHECKING IF THE LAST WALKING DIRECTION WAS TO THE LEFT
 			if (this.dogTongueLastWalkingLeft==true)
