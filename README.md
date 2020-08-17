@@ -26,6 +26,7 @@ tile-extruder --tileWidth 32 --tileHeight 32 --input ./originalSpritesheet.png -
 
 ```diff
 -this.load.spritesheet("dog", dogSprite, 32, 32, 30);
+
 +this.load.spritesheet("dog", dogSprite, 32, 32, 30, 1, 2);
 ```
 
