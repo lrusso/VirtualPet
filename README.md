@@ -32,9 +32,9 @@ tile-extruder --tileWidth 32 --tileHeight 32 --input ./originalSpritesheet.png -
 ## Note 2 - How to crop a sprite
 
 ```javascript
-var mySprite = game.add.sprite(0, 0, 'dog');
+var mySprite = game.add.sprite(0, 0, "dog");
 
-var cropRect = new Phaser.Rectangle(0, 0, 128, 128);
+var cropRect = new Phaser.Rectangle(0, 0, 32, 32);
 
 mySprite.crop(cropRect);
 ```
