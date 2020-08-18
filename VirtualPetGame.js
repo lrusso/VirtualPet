@@ -135,9 +135,10 @@ VirtualPet.Game.prototype = {
 
 	create: function ()
 		{
+		// SETTING THE BACKGROUND COLOR
 		this.stage.backgroundColor = "#61b2ff";
 
-		// ADDING THE HEALTH CONTAINER
+		// ADDING THE CLOUDS
 		this.cloud1 = game.add.sprite(100, 5, "cloudImg");
 		this.cloud2 = game.add.sprite(300, 35, "cloudImg");
 		this.cloud3 = game.add.sprite(500, 5, "cloudImg");
@@ -288,6 +289,7 @@ VirtualPet.Game.prototype = {
 
 	render: function ()
 		{
+		// MOVING THE CLOUDS
 		if (this.cloud1.x>0){this.cloud1.x = this.cloud1.x - 0.25;}else{this.cloud1.x = 800;}
 		if (this.cloud2.x>0){this.cloud2.x = this.cloud2.x - 0.25;}else{this.cloud2.x = 800;}
 		if (this.cloud3.x>0){this.cloud3.x = this.cloud3.x - 0.25;}else{this.cloud3.x = 800;}
