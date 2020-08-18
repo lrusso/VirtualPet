@@ -74,8 +74,13 @@ VirtualPet.Preloader.prototype = {
 
 VirtualPet.Game = function (game)
 	{
-	this.background = null;
 	this.splash = true;
+
+	this.cloud1 = null;
+	this.cloud2 = null;
+	this.cloud3 = null;
+	this.cloud4 = null;
+	this.background = null;
 
 	this.gardenTopLimit = 185;
 	this.gardenBottomLimit = 260;
@@ -91,6 +96,8 @@ VirtualPet.Game = function (game)
 	this.dogTongueLastWalkingRight = false;
 	this.dogTongueLastTimeAt = -1;
 
+	this.dogHouseCover = null;
+
 	this.healthContainer = null;
 	this.healthBorder1 = null;
 	this.healthBorder2 = null;
@@ -104,12 +111,6 @@ VirtualPet.Game = function (game)
 	this.actionsBackground = null;
 	this.actionsFood = null;
 	this.actionsDisc = null;
-
-	this.dogHouseCover = null;
-	this.cloud1 = null;
-	this.cloud2 = null;
-	this.cloud3 = null;
-	this.cloud4 = null;
 
 	// SCALING THE CANVAS SIZE FOR THE GAME
 	function resizeF()
