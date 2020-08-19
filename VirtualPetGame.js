@@ -374,6 +374,7 @@ VirtualPet.Game.prototype = {
 
 	checkAvailabilityForTongue: function()
 		{
+		// CHECKING IF THE DOG IS DOING SOMETHING
 		if (this.isDogInAction()==false)
 			{
 			if (this.getCurrentTime()>this.dogTongueLastTimeAt+5000)
@@ -396,7 +397,7 @@ VirtualPet.Game.prototype = {
 
 	checkAvailabilityForUpOrDown: function()
 		{
-		// CHECKING IF THE DOG IS NOT MOVING UP OR DOWN
+		// CHECKING IF THE DOG IS DOING SOMETHING
 		if (this.isDogInAction()==false)
 			{
 			// CHECKING IF THE DOG IS AT THE TOP OF THE GARDEN
@@ -418,6 +419,7 @@ VirtualPet.Game.prototype = {
 
 	checkAvailabilityForSleep: function()
 		{
+		// CHECKING IF THE DOG IS DOING SOMETHING
 		if (this.isDogInAction()==false)
 			{
 			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
