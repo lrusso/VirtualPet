@@ -372,26 +372,6 @@ VirtualPet.Game.prototype = {
 			}
 		},
 
-	actionWalkLeft: function()
-		{
-		this.dogSprite.animations.play("walk_left", 6, true);
-		},
-
-	actionWalkRight: function()
-		{
-		this.dogSprite.animations.play("walk_right", 6, true);
-		},
-
-	actionSleep: function()
-		{
-		this.dogSprite.animations.play("sleep", 1, true);
-		},
-
-	actionTongue: function()
-		{
-		this.dogSprite.animations.play("tongue", 6, false);
-		},
-
 	checkAvailabilityForTongue: function()
 		{
 		if (this.isDogInAction()==false)
@@ -486,6 +466,26 @@ VirtualPet.Game.prototype = {
 	getCurrentTime: function()
 		{
 		return window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+		},
+
+	actionWalkLeft: function()
+		{
+		this.dogSprite.animations.play("walk_left", 6, true);
+		},
+
+	actionWalkRight: function()
+		{
+		this.dogSprite.animations.play("walk_right", 6, true);
+		},
+
+	actionSleep: function()
+		{
+		this.dogSprite.animations.play("sleep", 1, true);
+		},
+
+	actionTongue: function()
+		{
+		this.dogSprite.animations.play("tongue", 6, false);
 		}
 	};
 
