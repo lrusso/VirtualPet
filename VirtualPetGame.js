@@ -84,6 +84,8 @@ VirtualPet.Game = function (game)
 
 	this.gardenTopLimit = 185;
 	this.gardenBottomLimit = 260;
+	this.gardenLeftLimit = 50;
+	this.gardenRightLimit = 550;
 
 	this.dogSprite = null;
 	this.dogMovingUp = false;
@@ -344,13 +346,13 @@ VirtualPet.Game.prototype = {
 				}
 
 			// CHECKING IF THE DOG REACHED THE RIGHT LIMIT OF THE SCREEN
-			if (this.dogSprite.x > 550)
+			if (this.dogSprite.x > this.gardenRightLimit)
 				{
 				// SETTING THAT THE DOG WILL BE WALKING TO THE LEFT
 				this.actionWalkLeft();
 				}
 			// CHECKING IF THE DOG REACHED THE LEFT LIMIT OF THE SCREEN
-			else if (this.dogSprite.x < 50)
+			else if (this.dogSprite.x < this.gardenLeftLimit)
 				{
 				// SETTING THAT THE DOG WILL BE WALKING TO THE RIGHT
 				this.actionWalkRight();
