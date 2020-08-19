@@ -304,30 +304,42 @@ VirtualPet.Game.prototype = {
 			// GETTING A RANDOM VALUE (FROM 0 TO 99) FOR HANDLE POSSIBILITIES
 			var randomValue = Math.random() * 100;
 
-			if (randomValue<0.2)		{this.checkForTongue()}
-			else if (randomValue<0.5)	{this.checkForUpOrDown()}
-			else if (randomValue<100)	{this.checkForSleep()}
+			// CHECKING THE RANDOM VALUE AND THE POSSIBILITY FOR EXECUTING AN ACTION
+			if (randomValue<=0.2)			{this.checkAvailabilityForTongue()}
+			else if (randomValue<=0.5)		{this.checkAvailabilityForUpOrDown()}
+			else if (randomValue<=99)		{this.checkAvailabilityForSleep()}
 
+			// CHECKING IF THE DOG MUST BE WALKING UP
 			if (this.dogMovingUp==true)
 				{
+				// CHECKING IF THE DOG DID NOT HIT THE GARDEN TOP LIMIT
 				if (this.dogSprite.y>this.gardenTopLimit)
 					{
+					// MOVING THE DOG HALF PIXEL TO THE TOP
 					this.dogSprite.y = this.dogSprite.y - 0.5;
 					}
 					else
 					{
+					// SETTING THE MOVING UP AND DOWN REFERENCES TO FALSE BECAUSE THE DOG
+					// HIT THE GARDEN TOP LIMIT SO THERE IS NO WALKING UP OR DOWN IN PROCESS.
 					this.dogMovingUp = false;
 					this.dogMovingDown = false;
 					}
 				}
+
+			// CHECKING IF THE DOG MUST BE WALKING DOWN
 			else if (this.dogMovingDown==true)
 				{
+				// CHECKING IF THE DOG DID NOT HIT THE GARDEN BOTTOM LIMIT
 				if (this.dogSprite.y<this.gardenBottomLimit)
 					{
+					// MOVING THE DOG HALF PIXEL TO THE BOTTOM
 					this.dogSprite.y = this.dogSprite.y + 0.5;
 					}
 					else
 					{
+					// SETTING THE MOVING UP AND DOWN REFERENCES TO FALSE BECAUSE THE DOG
+					// HIT THE GARDEN TOP LIMIT SO THERE IS NO WALKING UP OR DOWN IN PROCESS.
 					this.dogMovingUp = false;
 					this.dogMovingDown = false;
 					}
@@ -380,7 +392,7 @@ VirtualPet.Game.prototype = {
 		this.dogSprite.animations.play("tongue", 6, false);
 		},
 
-	checkForTongue: function()
+	checkAvailabilityForTongue: function()
 		{
 		if (this.isDogInAction()==false)
 			{
@@ -402,7 +414,7 @@ VirtualPet.Game.prototype = {
 			}
 		},
 
-	checkForUpOrDown: function()
+	checkAvailabilityForUpOrDown: function()
 		{
 		// CHECKING IF THE DOG IS NOT MOVING UP OR DOWN
 		if (this.isDogInAction()==false)
@@ -424,7 +436,7 @@ VirtualPet.Game.prototype = {
 			}
 		},
 
-	checkForSleep: function()
+	checkAvailabilityForSleep: function()
 		{
 		if (this.isDogInAction()==false)
 			{
