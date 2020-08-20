@@ -517,7 +517,7 @@ VirtualPet.Game.prototype = {
 	checkAvailabilityForSleep: function()
 		{
 		// CHECKING IF THE DOG IS DOING SOMETHING
-		if (this.isDogInAction()==false)
+		if (this.isDogInAction()==false && this.isDogWalking()==true)
 			{
 			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
 				{
