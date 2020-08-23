@@ -355,9 +355,6 @@ VirtualPet.Game.prototype = {
 					// MAKING THE DOG WALK
 					this.dogWalkingSpeed = 1;
 
-					// CLEARING THE FAST WALKING TIMESTAMP
-					this.dogWalkingFastUntil = null;
-
 					if (this.dogSprite.animations.currentAnim.name=="run_right")
 						{
 						this.actionWalkRight();
@@ -522,7 +519,7 @@ VirtualPet.Game.prototype = {
 			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
 				{
 				var timeStampInMs = this.getCurrentTime();
-				if (timeStampInMs>this.dogSleepingSince+60000)
+				if (timeStampInMs>this.dogSleepingSince+60000 && timeStampInMs>this.dogWalkingFastUntil+5000)
 					{
 					this.dogSleepingSince = timeStampInMs;
 					this.dogSleeping = true;
