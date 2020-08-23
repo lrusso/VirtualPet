@@ -410,7 +410,6 @@ VirtualPet.Game.prototype = {
 					this.dogMovingDown = false;
 					}
 				}
-
 			// CHECKING IF THE DOG MUST BE WALKING DOWN
 			else if (this.dogMovingDown==true)
 				{
@@ -429,12 +428,13 @@ VirtualPet.Game.prototype = {
 					}
 				}
 
-			// CHECKING THE CURRENT DOG ANIMATION AND UPDATING THE DOG POSITION
+			// CHECKING IF THE DOG IS WALKING OR RUNNING TO THE RIGHT
 			if (this.dogSprite.animations.currentAnim.name=="walk_right" || this.dogSprite.animations.currentAnim.name=="run_right")
 				{
 				// MOVING THE DOG ONE PIXEL TO THE RIGHT WHILE THE "WALK_RIGHT" ANIMATION IS HAPPENING
 				this.dogSprite.x = this.dogSprite.x + this.dogWalkingSpeed;
 				}
+			// CHECKING IF THE DOG IS WALKING OR RUNNING TO THE LEFT
 			else if (this.dogSprite.animations.currentAnim.name=="walk_left" || this.dogSprite.animations.currentAnim.name=="run_left")
 				{
 				// MOVING THE DOG ONE PIXEL TO THE LEFT WHILE THE "WALK_LEFT" ANIMATION IS HAPPENING
