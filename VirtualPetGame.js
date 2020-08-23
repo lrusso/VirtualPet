@@ -479,19 +479,29 @@ VirtualPet.Game.prototype = {
 		// CHECKING IF THE DOG IS DOING SOMETHING
 		if (this.isDogInAction()==false && this.isDogWalking()==true)
 			{
+			// CHECKING IF 5 SECONDS PASSED SINCE THE LAST TIME THE DOG STUCK OUT HIS TONGUE AND 15 SECONDS AFTER THE LAST NAP
 			if (this.getCurrentTime()>this.dogTongueLastTimeAt+5000 && this.getCurrentTime()>this.dogSleepingSince+15000)
 				{
+				// CHECKING IF THE DOG IS WALKING TO THE LEFT
 				if (this.dogSprite.animations.currentAnim.name=="walk_left")
 					{
+					// SETTING THAT THE LAST WALK DIRECTION WAS TO THE LEFT
 					this.dogTongueLastWalkingLeft = true;
 					}
 				else
 					{
+					// SETTING THAT THE LAST WALK DIRECTION WAS TO THE RIGHT
 					this.dogTongueLastWalkingRight = true;
 					}
+
+				// MAKING THE DOG STICK OUT HIS TONGUE
 				this.actionTongue();
+
+				// SETTING THAT THERE IS NO UP OR DOWN MOVEMENT IN PROGRESS
 				this.dogMovingDown = false;
 				this.dogMovingUp = false;
+
+				// SETTING THAT THE DOG IS STICKING OUT HIS TONGUE
 				this.dogTongue = true;
 				}
 			}
