@@ -16,7 +16,7 @@ if (userLanguage.substring(0,2)=="es")
 	STRING_ABOUT = "Designed by www.lrusso.com";
 	}
 
-var VirtualPet = {showDebug: false, turnPlayer1: 0, turnPlayer2: 1, typeStripes: 1, typeSolids: 0, WHITE: 0, YELLOW: 1, BLUE: 2, RED: 3, PURPLE: 4, ORANGE: 5, GREEN: 6, BROWN: 7, BLACK: 8, NINE: 9, TEN: 10, ELEVEN: 11, TWELVE: 12, THIRTHEEN: 13, FOURTEEN: 14, FIFTEEN: 15};
+var VirtualPet = {showDebug: false};
 
 VirtualPet.Preloader = function () {};
 
