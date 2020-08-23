@@ -479,7 +479,7 @@ VirtualPet.Game.prototype = {
 		// CHECKING IF THE DOG IS DOING SOMETHING
 		if (this.isDogInAction()==false && this.isDogWalking()==true)
 			{
-			// CHECKING IF 5 SECONDS PASSED SINCE THE LAST TIME THE DOG STUCK OUT HIS TONGUE AND 15 SECONDS AFTER THE LAST NAP
+			// CHECKING IF 5 SECONDS PASSED SINCE THE LAST TIME THE DOG STUCK OUT HIS TONGUE AND 15 SECONDS AFTER THE LAST DOG NAP
 			if (this.getCurrentTime()>this.dogTongueLastTimeAt+5000 && this.getCurrentTime()>this.dogSleepingSince+15000)
 				{
 				// CHECKING IF THE DOG IS WALKING TO THE LEFT
@@ -534,16 +534,29 @@ VirtualPet.Game.prototype = {
 		// CHECKING IF THE DOG IS DOING SOMETHING
 		if (this.isDogInAction()==false && this.isDogWalking()==true)
 			{
+			// CHECKING IF THE DOG IS LOCATED WITHIN THE DOG HOUSE
 			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==140)
 				{
+				// GETTING THE CURRENT TIMESTAMP
 				var timeStampInMs = this.getCurrentTime();
+
+				// CHECKING IF 60 SECONDS PASSED SINCE THE LAST DOG NAP AND 5 SECONDS AFTER THE LAST RUN
 				if (timeStampInMs>this.dogSleepingSince+60000 && timeStampInMs>this.dogWalkingFastUntil+5000)
 					{
+					// SETTING THE TIMESTAMP TO KNOW WHEN THE DOG STARTED HIS NAP
 					this.dogSleepingSince = timeStampInMs;
-					this.dogSleeping = true;
+
+					// MAKING THE DOG SLEEP
 					this.actionSleep();
+
+					// SETTING THAT THERE IS NO UP OR DOWN MOVEMENT IN PROGRESS
 					this.dogMovingDown = false;
 					this.dogMovingUp = false;
+
+					// SETTING THAT THE DOG IS SLEEPING
+					this.dogSleeping = true;
+
+					// SHOWING THE DOG HOUSE COVER
 					this.dogHouseCover.visible = true;
 					}
 				}
