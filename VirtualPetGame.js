@@ -565,12 +565,19 @@ VirtualPet.Game.prototype = {
 
 	isDogSleeping: function()
 		{
+		// CHECKING IF THE DOG IS SLEEPING
 		if (this.dogSleeping==true)
 			{
+			// CHECKING IF THE DOG HAS BEEN SLEEPING FOR MORE THAN 10 SECONDS
 			if (this.getCurrentTime()>this.dogSleepingSince+10000)
 				{
+				// SETTING THAT THE DOG IS NOT SLEEPING
 				this.dogSleeping = false;
+
+				// HIDING THE DOG HOUSE COVER
 				this.dogHouseCover.visible = false;
+
+				// MAKING THE DOG WALK TO THE RIGHT
 				this.actionWalkRight();
 				}
 			return true;
