@@ -349,29 +349,37 @@ VirtualPet.Game.prototype = {
 			// CHECKING IF THE DOG IS WALKING FAST
 			if (this.dogWalkingSpeed>1)
 				{
-				// CHECKING IF IT IS TIME THE DOG TO WALK
+				// CHECKING IF IT IS TIME TO THE DOG TO WALK
 				if(this.dogWalkingFastUntil<this.getCurrentTime())
 					{
 					// MAKING THE DOG WALK
 					this.dogWalkingSpeed = 1;
 
+					// CHECKING IF THE DOG IS RUNNING TO THE RIGHT
 					if (this.dogSprite.animations.currentAnim.name=="run_right")
 						{
+						// MAKING THE DOG WALK TO THE RIGHT
 						this.actionWalkRight();
 						}
+					// CHECKING IF THE DOG IS RUNNING TO THE LEFT
 					else if (this.dogSprite.animations.currentAnim.name=="run_left")
 						{
+						// MAKING THE DOG WALK TO THE LEFT
 						this.actionWalkLeft();
 						}
 					}
 					else
 					{
+					// CHECKING IF THE DOG IS WALKING TO THE RIGHT
 					if (this.dogSprite.animations.currentAnim.name=="walk_right")
 						{
+						// MAKING THE DOG RUN TO THE RIGHT
 						this.actionRunRight();
 						}
+					// CHECKING IF THE DOG IS WALKING TO THE LEFT
 					else if (this.dogSprite.animations.currentAnim.name=="walk_left")
 						{
+						// MAKING THE DOG RUN TO THE LEFT
 						this.actionRunLeft();
 						}
 					}
