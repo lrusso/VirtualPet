@@ -110,10 +110,13 @@ VirtualPet.Game = function (game)
 	this.healthEmpty = null;
 	this.healthMask = null;
 	this.healthValue = null;
+	this.healthValueIncreasing = 0.05;
+	this.healthValueMax = 1.21;
 	this.healthCircle = null;
 	this.healthIcon = null;
 	this.healthMustDecrease = true;
-	this.healthMustIncrese = false;
+	this.healthMustIncrease = false;
+	this.healthMustIncreaseTo = null;
 	this.healthClock = null;
 
 	this.actionsContainer = null;
@@ -215,6 +218,31 @@ VirtualPet.Game.prototype = {
 
 		// ADDING THE FOOD IMAGE
 		this.actionsFood = game.add.sprite(10, 5, "foodImg");
+
+		// SETTING THAT THE FOOD IMAGE IS CLICKEABLE OR TOUCHEABLE
+		this.actionsFood.inputEnabled = true;
+
+		// SETTING WHAT WILL HAPPEN WHEN THE USER CLICKS OR TOUCHES THE FOOD IMAGE
+		this.actionsFood.events.onInputUp.add(function()
+			{
+			// SETTING THAT THE DOG WILL BE INCREASING
+			this.healthMustIncrease = true;
+			this.healthMustDecrease = false;
+
+			// CHECKING IF THE INCREASING OF THE DOG HEALTH IS NOT GREATER THAN THE MAX HEALTH VALUE
+			if (this.healthValue.width + this.healthValueIncreasing < this.healthValueMax)
+				{
+				// UPDATING THE INCREASE HEALTH VALUE WITH A SMALL INCREASE
+				this.healthMustIncreaseTo = this.healthValue.width + this.healthValueIncreasing;
+				}
+				else
+				{
+				// UPDATING THE INCREASE HEALTH VALUE TO THE MAX VALUE POSSIBLE
+				this.healthMustIncreaseTo = this.healthValueMax;
+				}
+			}, this);
+
+		// ADDING THE FOOD IMAGE TO THE ACTIONS CONTAINER
 		this.actionsContainer.addChild(this.actionsFood);
 
 		// ADDING THE DISC IMAGE
@@ -379,6 +407,37 @@ VirtualPet.Game.prototype = {
 					{
 					// DECREASING THE HEALTH VALUE
 					this.healthValue.width = this.healthValue.width - 0.01;
+					}
+
+				// UPDATING THE HEALTH CLOCK
+				this.healthClock = this.getCurrentTime();
+				}
+			}
+
+		// CHECKING IF THE DOG'S HEALTH VALUE MUST BE INCREASED
+		if (this.healthMustIncrease==true)
+			{
+			// CHECKING IF THE HEALTH CLOCK IS NULL
+			if (this.healthClock==null)
+				{
+				// UPDATING THE HEALTH CLOCK
+				this.healthClock = this.getCurrentTime();
+				}
+
+			// CHECKING IF THE AT LEAST 0.5 SECONDS PASSED AFTER THE LAST TIME THAT THE HEALTH VALUE WAS INCREASED
+			if (this.healthClock+0.5<this.getCurrentTime())
+				{
+				// CHECKING IF THE HEALTH VALUE IS LESS THAN THE SPECIFIED VALUE TO INCREASE TO
+				if (this.healthValue.width <= this.healthMustIncreaseTo)
+					{
+					// INCREASING THE HEALTH VALUE
+					this.healthValue.width = this.healthValue.width + 0.005;
+					}
+					else
+					{
+					// THE HEALTH WAS RESTORED TO THE SPECIFIED VALUE, SO AFTER NOW IT WILL BE DECREASING AGAIN
+					this.healthMustDecrease = true;
+					this.healthMustIncrease = false;
 					}
 
 				// UPDATING THE HEALTH CLOCK
