@@ -112,6 +112,9 @@ VirtualPet.Game = function (game)
 	this.healthValue = null;
 	this.healthCircle = null;
 	this.healthIcon = null;
+	this.healthMustDecrease = true;
+	this.healthMustIncrese = false;
+	this.healthClock = null;
 
 	this.actionsContainer = null;
 	this.actionsBackground = null;
@@ -343,11 +346,51 @@ VirtualPet.Game.prototype = {
 		if (this.cloud3.x>0){this.cloud3.x = this.cloud3.x - 0.25;}else{this.cloud3.x = 800;}
 		if (this.cloud4.x>0){this.cloud4.x = this.cloud4.x - 0.25;}else{this.cloud4.x = 800;}
 
+		// CHECKING IF THE DOG'S ENERGY MUST BE DECREASED
+		if (this.healthMustDecrease==true)
+			{
+			// CHECKING IF THE HEALTH CLOCK IS NULL
+			if (this.healthClock==null)
+				{
+				// UPDATING THE HEALTH CLOCK
+				this.healthClock = this.getCurrentTime();
+				}
+
+			// CREATING A VARIABLE TO HANDLE HOW MANY ENERGY THE DOG WILL USE FOR WALKING OR RUNNING
+			var delayWalkingRunning;
+
+			// CHECKING IF THE DOG IS WALKING
+			if (this.isDogWalking()==true)
+				{
+				// SETTING THAT THE DOG WILL LOSE ENERGY AFTER 3 SECONDS
+				delayWalkingRunning = 3000;
+				}
+				else
+				{
+				// SETTING THAT THE DOG WILL LOSE ENERGY AFTER 0.5 SECONDS
+				delayWalkingRunning = 500;
+				}
+
+			// CHECKING IF THE AT LEAST 3 OR 0.5 SECONDS PASSED AFTER THE LAST TIME THAT THE ENERY WAS DECREASED
+			if (this.healthClock+delayWalkingRunning<this.getCurrentTime())
+				{
+				// CHECKING IF THE HEALTH VALUE IS GREATER THAN 0
+				if (this.healthValue.width > 0)
+					{
+					// DECREASING THE HEALTH VALUE
+					this.healthValue.width = this.healthValue.width - 0.01;
+					}
+
+				// UPDATING THE HEALTH CLOCK
+				this.healthClock = this.getCurrentTime();
+				}
+			}
+
 		// CHECKING IF THE DOG IS NOT SLEEPING IN ORDER TO PERFORM ANOTHER ACTION
 		if (this.isDogSleeping()==false)
 			{
-			// CHECKING IF THE DOG IS WALKING FAST
-			if (this.dogWalkingSpeed>1)
+			// CHECKING IF THE DOG IS RUNNING
+			if (this.isDogWalking()==false)
 				{
 				// CHECKING IF IT IS TIME TO THE DOG TO WALK
 				if(this.dogWalkingFastUntil<this.getCurrentTime())
@@ -444,8 +487,8 @@ VirtualPet.Game.prototype = {
 			// CHECKING IF THE DOG REACHED THE RIGHT LIMIT OF THE SCREEN
 			if (this.dogSprite.x > this.gardenRightLimit)
 				{
-				// CHECKING THE DOG SPEED
-				if (this.dogWalkingSpeed==1)
+				// CHECKING IF THE DOG IS WALKING
+				if (this.isDogWalking()==true)
 					{
 					// SETTING THAT THE DOG WILL BE WALKING TO THE LEFT
 					this.actionWalkLeft();
@@ -459,8 +502,8 @@ VirtualPet.Game.prototype = {
 			// CHECKING IF THE DOG REACHED THE LEFT LIMIT OF THE SCREEN
 			else if (this.dogSprite.x < this.gardenLeftLimit)
 				{
-				// CHECKING THE DOG SPEED
-				if (this.dogWalkingSpeed==1)
+				// CHECKING IF THE DOG IS WALKING
+				if (this.isDogWalking()==true)
 					{
 					// SETTING THAT THE DOG WILL BE WALKING TO THE RIGHT
 					this.actionWalkRight();
