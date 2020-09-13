@@ -346,7 +346,7 @@ VirtualPet.Game.prototype = {
 		if (this.cloud3.x>0){this.cloud3.x = this.cloud3.x - 0.25;}else{this.cloud3.x = 800;}
 		if (this.cloud4.x>0){this.cloud4.x = this.cloud4.x - 0.25;}else{this.cloud4.x = 800;}
 
-		// CHECKING IF THE DOG'S ENERGY MUST BE DECREASED
+		// CHECKING IF THE DOG'S HEALTH VALUE MUST BE DECREASED
 		if (this.healthMustDecrease==true)
 			{
 			// CHECKING IF THE HEALTH CLOCK IS NULL
@@ -356,22 +356,22 @@ VirtualPet.Game.prototype = {
 				this.healthClock = this.getCurrentTime();
 				}
 
-			// CREATING A VARIABLE TO HANDLE HOW MANY ENERGY THE DOG WILL USE FOR WALKING OR RUNNING
+			// CREATING A VARIABLE TO HANDLE HOW MANY HEALTH VALUE THE DOG WILL USE FOR WALKING OR RUNNING
 			var delayWalkingRunning;
 
 			// CHECKING IF THE DOG IS WALKING
 			if (this.isDogWalking()==true)
 				{
-				// SETTING THAT THE DOG WILL LOSE ENERGY AFTER 3 SECONDS
+				// SETTING THAT THE DOG WILL LOSE HEALTH VALUE AFTER 3 SECONDS
 				delayWalkingRunning = 3000;
 				}
 				else
 				{
-				// SETTING THAT THE DOG WILL LOSE ENERGY AFTER 0.5 SECONDS
+				// SETTING THAT THE DOG WILL LOSE HEALTH VALUE AFTER 0.5 SECONDS
 				delayWalkingRunning = 500;
 				}
 
-			// CHECKING IF THE AT LEAST 3 OR 0.5 SECONDS PASSED AFTER THE LAST TIME THAT THE ENERY WAS DECREASED
+			// CHECKING IF THE AT LEAST 3 OR 0.5 SECONDS PASSED AFTER THE LAST TIME THAT THE HEALTH VALUE WAS DECREASED
 			if (this.healthClock+delayWalkingRunning<this.getCurrentTime())
 				{
 				// CHECKING IF THE HEALTH VALUE IS GREATER THAN 0
