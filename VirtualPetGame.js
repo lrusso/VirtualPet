@@ -262,7 +262,7 @@ VirtualPet.Game.prototype = {
 		this.actionsContainer.addChild(this.actionsDogPlate);
 
 		// ADDING THE DOG PLATE FOOD IMAGE
-		this.actionsDogPlateFood = game.add.sprite(22, 22.2, "dogPlateFood");
+		this.actionsDogPlateFood = game.add.sprite(22, 22.6, "dogPlateFood");
 
 		// ADDING THE DOG PLATE FOOD IMAGE TO THE ACTIONS CONTAINER
 		this.actionsContainer.addChild(this.actionsDogPlateFood);
