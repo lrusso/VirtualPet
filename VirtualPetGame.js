@@ -69,6 +69,8 @@ VirtualPet.Preloader.prototype = {
 		this.load.image("dogPlate", dogPlate);
 		this.load.image("dogPlateFood", dogPlateFood);
 		this.load.audio("dogBark", dogBark);
+
+		this.load.script("gray","data:application/x-javascript;base64,LyoqCiogQGF1dGhvciBNYXQgR3JvdmVzIGh0dHA6Ly9tYXRncm92ZXMuY29tLyBARG9vcm1hdDIzCiovCgovKioKKiBUaGlzIHR1cm5zIHlvdXIgZGlzcGxheU9iamVjdHMgdG8gZ3JheXNjYWxlLgoqIEBjbGFzcyBHcmF5CiogQGNvbnRydWN0b3IKKi8KUGhhc2VyLkZpbHRlci5HcmF5ID0gZnVuY3Rpb24gKGdhbWUpIHsKCiAgICBQaGFzZXIuRmlsdGVyLmNhbGwodGhpcywgZ2FtZSk7CgogICAgdGhpcy51bmlmb3Jtcy5ncmF5ID0geyB0eXBlOiAnMWYnLCB2YWx1ZTogMS4wIH07CgogICAgdGhpcy5mcmFnbWVudFNyYyA9IFsKCiAgICAgICAgInByZWNpc2lvbiBtZWRpdW1wIGZsb2F0OyIsCgogICAgICAgICJ2YXJ5aW5nIHZlYzIgICAgICAgdlRleHR1cmVDb29yZDsiLAogICAgICAgICJ2YXJ5aW5nIHZlYzQgICAgICAgdkNvbG9yOyIsCiAgICAgICAgInVuaWZvcm0gc2FtcGxlcjJEICB1U2FtcGxlcjsiLAogICAgICAgICJ1bmlmb3JtIGZsb2F0ICAgICAgZ3JheTsiLAoKICAgICAgICAidm9pZCBtYWluKHZvaWQpIHsiLAogICAgICAgICAgICAiZ2xfRnJhZ0NvbG9yID0gdGV4dHVyZTJEKHVTYW1wbGVyLCB2VGV4dHVyZUNvb3JkKTsiLAogICAgICAgICAgICAiZ2xfRnJhZ0NvbG9yLnJnYiA9IG1peChnbF9GcmFnQ29sb3IucmdiLCB2ZWMzKDAuMjEyNiAqIGdsX0ZyYWdDb2xvci5yICsgMC43MTUyICogZ2xfRnJhZ0NvbG9yLmcgKyAwLjA3MjIgKiBnbF9GcmFnQ29sb3IuYiksIGdyYXkpOyIsCiAgICAgICAgIn0iCiAgICBdOwoKfTsKClBoYXNlci5GaWx0ZXIuR3JheS5wcm90b3R5cGUgPSBPYmplY3QuY3JlYXRlKFBoYXNlci5GaWx0ZXIucHJvdG90eXBlKTsKUGhhc2VyLkZpbHRlci5HcmF5LnByb3RvdHlwZS5jb25zdHJ1Y3RvciA9IFBoYXNlci5GaWx0ZXIuR3JheTsKCi8qKgoqIFRoZSBzdHJlbmd0aCBvZiB0aGUgZ3JheS4gMSB3aWxsIG1ha2UgdGhlIG9iamVjdCBibGFjayBhbmQgd2hpdGUsIDAgd2lsbCBtYWtlIHRoZSBvYmplY3QgaXRzIG5vcm1hbCBjb2xvcgoqIEBwcm9wZXJ0eSBncmF5CiovCk9iamVjdC5kZWZpbmVQcm9wZXJ0eShQaGFzZXIuRmlsdGVyLkdyYXkucHJvdG90eXBlLCAnZ3JheScsIHsKCiAgICBnZXQ6IGZ1bmN0aW9uKCkgewogICAgICAgIHJldHVybiB0aGlzLnVuaWZvcm1zLmdyYXkudmFsdWU7CiAgICB9LAoKICAgIHNldDogZnVuY3Rpb24odmFsdWUpIHsKICAgICAgICB0aGlzLnVuaWZvcm1zLmdyYXkudmFsdWUgPSB2YWx1ZTsKICAgIH0KCn0pOwo=");
 		},
 
 	create: function ()
@@ -81,6 +83,8 @@ VirtualPet.Preloader.prototype = {
 VirtualPet.Game = function (game)
 	{
 	this.splash = true;
+
+	this.grayFilter = null;
 
 	this.cloud1 = null;
 	this.cloud2 = null;
@@ -114,7 +118,7 @@ VirtualPet.Game = function (game)
 	this.healthEmpty = null;
 	this.healthMask = null;
 	this.healthValue = null;
-	this.healthValueIncreasing = 0.05;
+	this.healthValueIncreasing = 0.10;
 	this.healthValueMax = 1.21;
 	this.healthCircle = null;
 	this.healthIcon = null;
@@ -156,6 +160,8 @@ VirtualPet.Game.prototype = {
 
 	create: function ()
 		{
+		this.grayFilter = this.add.filter("Gray");
+
 		// SETTING THE BACKGROUND COLOR
 		this.stage.backgroundColor = "#61b2ff";
 
@@ -233,6 +239,9 @@ VirtualPet.Game.prototype = {
 			// SETTING THAT THE DOG WILL BE INCREASING
 			this.healthMustIncrease = true;
 			this.healthMustDecrease = false;
+
+			this.actionsDogPlate.filters = [this.grayFilter];
+			this.actionsDogPlateFood.filters = [this.grayFilter];
 
 			// CHECKING IF THE INCREASING OF THE DOG HEALTH IS NOT GREATER THAN THE MAX HEALTH VALUE
 			if (this.healthValue.width + this.healthValueIncreasing < this.healthValueMax)
@@ -449,6 +458,9 @@ VirtualPet.Game.prototype = {
 					// THE HEALTH WAS RESTORED TO THE SPECIFIED VALUE, SO AFTER NOW IT WILL BE DECREASING AGAIN
 					this.healthMustDecrease = true;
 					this.healthMustIncrease = false;
+
+					this.actionsDogPlate.filters = null;
+					this.actionsDogPlateFood.filters = null;
 					}
 
 				// UPDATING THE HEALTH CLOCK
