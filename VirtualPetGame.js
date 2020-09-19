@@ -160,6 +160,7 @@ VirtualPet.Game.prototype = {
 
 	create: function ()
 		{
+		// ADDING THE GRAY FILTER TO PHASER
 		this.grayFilter = this.add.filter("Gray");
 
 		// SETTING THE BACKGROUND COLOR
@@ -240,6 +241,7 @@ VirtualPet.Game.prototype = {
 			this.healthMustIncrease = true;
 			this.healthMustDecrease = false;
 
+			// SETTING THAT THE DOG PLATE AND DOG PLATE FOOD IMAGE WILL BE USING A GRAY FILTER
 			this.actionsDogPlate.filters = [this.grayFilter];
 			this.actionsDogPlateFood.filters = [this.grayFilter];
 
@@ -459,6 +461,7 @@ VirtualPet.Game.prototype = {
 					this.healthMustDecrease = true;
 					this.healthMustIncrease = false;
 
+					// REMOVING THE GRAY FILTER FROM THE DOG PLATE AND DOG PLATE FOOD IMAGE
 					this.actionsDogPlate.filters = null;
 					this.actionsDogPlateFood.filters = null;
 					}
