@@ -131,15 +131,16 @@ VirtualPet.Game = function (game)
 	this.healthMustIncreaseTo = null;
 	this.healthClock = null;
 
-	this.actionsSoundOff = null;
-	this.actionsSoundOn = null;
 
-	this.actionsContainer = null;
 	this.actionsBackground = null;
 	this.actionsSoundHandler = null;
+	this.actionsSoundHandlerOff = null;
+	this.actionsSoundHandlerOn = null;
 	this.actionsDogPlate = null;
-	this.actionsDogPlateFood = null;
+	this.actionsDogPlateImg = null;
+	this.actionsDogPlateImgFood = null;
 	this.actionsDisc = null;
+	this.actionsDiscImg = null;
 
 	this.musicPlayer = null;
 	this.audioPlayer = null;
@@ -230,17 +231,13 @@ VirtualPet.Game.prototype = {
 		this.healthIcon = game.add.sprite(9, 10.5, "healthImg");
 		this.healthContainer.addChild(this.healthIcon);
 
-		// ADDING THE ACTIONS CONTAINER
-		this.actionsContainer = game.add.sprite(550, 0, "");
-
 		// ADDING THE ACTIONS BACKGROUND
 		this.actionsBackground = game.add.graphics();
 		this.actionsBackground.beginFill(0x000000, 0.4);
-		this.actionsBackground.drawRoundedRect(0, -10, 300, 61.5, 10);
-		this.actionsContainer.addChild(this.actionsBackground);
+		this.actionsBackground.drawRoundedRect(550, -10, 300, 61.5, 10);
 
 		// ADDING THE SOUND HANDLER
-		this.actionsSoundHandler = game.add.sprite(0, 0, "");
+		this.actionsSoundHandler = game.add.sprite(555, 0, "");
 		this.actionsSoundHandler.width = 65;
 		this.actionsSoundHandler.height = 55;
 		this.actionsSoundHandler.inputEnabled = true;
@@ -252,10 +249,10 @@ VirtualPet.Game.prototype = {
 				this.soundEnabled = true;
 
 				// SHOWING THE SOUND ON ICON
-				this.actionsSoundOn.visible = true;
+				this.actionsSoundHandlerOn.visible = true;
 
 				// HIDING THE SOUND OFF ICON
-				this.actionsSoundOff.visible = false;
+				this.actionsSoundHandlerOff.visible = false;
 
 				// CHECKING IF THE MUSIC PLAYER IS NOT CREATED
 				if (this.musicPlayer==null)
@@ -279,10 +276,10 @@ VirtualPet.Game.prototype = {
 				this.soundEnabled = false;
 
 				// SHOWING THE SOUND OFF ICON
-				this.actionsSoundOff.visible = true;
+				this.actionsSoundHandlerOff.visible = true;
 
 				// HIDING THE SOUND ON ICON
-				this.actionsSoundOn.visible = false;
+				this.actionsSoundHandlerOn.visible = false;
 
 				// CHECKING IF THE MUSIC PLAYER IS CREATED
 				if (this.musicPlayer!=null)
@@ -292,18 +289,18 @@ VirtualPet.Game.prototype = {
 					}
 				}
 			},this)
-		this.actionsContainer.addChild(this.actionsSoundHandler);
 
 		// ADDING THE SOUND OFF IMAGE
-		this.actionsSoundOff = game.add.sprite(570, 10, "soundHandler");
-		this.actionsSoundOff.filters = [this.grayFilter];
+		this.actionsSoundHandlerOff = game.add.sprite(570, 10, "soundHandler");
+		this.actionsSoundHandlerOff.filters = [this.grayFilter];
 
 		// ADDING THE SOUND ON IMAGE
-		this.actionsSoundOn = game.add.sprite(570, 10, "soundHandler");
-		this.actionsSoundOn.visible = false;
+		this.actionsSoundHandlerOn = game.add.sprite(570, 10, "soundHandler");
+		this.actionsSoundHandlerOn.visible = false;
 
-		// ADDING THE DOG PLATE IMAGE
-		this.actionsDogPlate = game.add.sprite(81, 15, "dogPlate");
+		this.actionsDogPlate = game.add.sprite(635, 0, "");
+		this.actionsDogPlate.width = 65;
+		this.actionsDogPlate.height = 55;
 		this.actionsDogPlate.inputEnabled = true;
 		this.actionsDogPlate.events.onInputUp.add(function()
 			{
@@ -312,8 +309,8 @@ VirtualPet.Game.prototype = {
 			this.healthMustDecrease = false;
 
 			// SETTING THAT THE DOG PLATE AND DOG PLATE FOOD IMAGE WILL BE USING A GRAY FILTER
-			this.actionsDogPlate.filters = [this.grayFilter];
-			this.actionsDogPlateFood.filters = [this.grayFilter];
+			this.actionsDogPlateImg.filters = [this.grayFilter];
+			this.actionsDogPlateImgFood.filters = [this.grayFilter];
 
 			// CHECKING IF THE INCREASING OF THE DOG HEALTH IS NOT GREATER THAN THE MAX HEALTH VALUE
 			if (this.healthValue.width + this.healthValueIncreasing < this.healthValueMax)
@@ -328,18 +325,18 @@ VirtualPet.Game.prototype = {
 				}
 			}, this);
 
-		// ADDING THE DOG PLATE IMAGE TO THE ACTIONS CONTAINER
-		this.actionsContainer.addChild(this.actionsDogPlate);
+		// ADDING THE DOG PLATE IMAGE
+		this.actionsDogPlateImg = game.add.sprite(640, 15, "dogPlate");
 
 		// ADDING THE DOG PLATE FOOD IMAGE
-		this.actionsDogPlateFood = game.add.sprite(85, 11.3, "dogPlateFood");
+		this.actionsDogPlateImgFood = game.add.sprite(645, 11.3, "dogPlateFood");
 
-		// ADDING THE DOG PLATE FOOD IMAGE TO THE ACTIONS CONTAINER
-		this.actionsContainer.addChild(this.actionsDogPlateFood);
+		this.actionsDisc = game.add.sprite(725, 0, "");
+		this.actionsDisc.width = 65;
+		this.actionsDisc.height = 55;
 
 		// ADDING THE DISC IMAGE
-		this.actionsDisc = game.add.sprite(163, -5, "discImg");
-		this.actionsContainer.addChild(this.actionsDisc);
+		this.actionsDiscImg = game.add.sprite(725, -5, "discImg");
 
 		// ADDING THE DOG SPRITE
 		this.dogSprite = game.add.sprite(300, this.gardenBottomLimit, "dog");
@@ -536,8 +533,8 @@ VirtualPet.Game.prototype = {
 					this.healthMustIncrease = false;
 
 					// REMOVING THE GRAY FILTER FROM THE DOG PLATE AND DOG PLATE FOOD IMAGE
-					this.actionsDogPlate.filters = null;
-					this.actionsDogPlateFood.filters = null;
+					this.actionsDogPlateImg.filters = null;
+					this.actionsDogPlateImgFood.filters = null;
 					}
 
 				// UPDATING THE HEALTH CLOCK
