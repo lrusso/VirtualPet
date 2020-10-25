@@ -131,7 +131,6 @@ VirtualPet.Game = function (game)
 	this.healthMustIncreaseTo = null;
 	this.healthClock = null;
 
-
 	this.actionsBackground = null;
 	this.actionsSoundHandler = null;
 	this.actionsSoundHandlerOff = null;
@@ -243,7 +242,26 @@ VirtualPet.Game.prototype = {
 		this.actionsSoundHandler.inputEnabled = true;
 		this.actionsSoundHandler.events.onInputUp.add(function()
 			{
-			if (this.soundEnabled==false)
+			// CHECKING IF THE SOUND IS ENABLED
+			if (this.soundEnabled==true)
+				{
+				// SETTING THAT THE SOUND WILL BE DISABLED
+				this.soundEnabled = false;
+
+				// SHOWING THE SOUND OFF ICON
+				this.actionsSoundHandlerOff.visible = true;
+
+				// HIDING THE SOUND ON ICON
+				this.actionsSoundHandlerOn.visible = false;
+
+				// CHECKING IF THE MUSIC PLAYER IS CREATED
+				if (this.musicPlayer!=null)
+					{
+					// PAUSING THE BACKGROUND MUSIC
+					this.musicPlayer.pause();
+					}
+				}
+				else
 				{
 				// SETTING THAT THE SOUND WILL BE ENABLED
 				this.soundEnabled = true;
@@ -270,24 +288,6 @@ VirtualPet.Game.prototype = {
 				// PLAYING THE BACKGROUND MUSIC
 				this.musicPlayer.play();
 				}
-				else
-				{
-				// SETTING THAT THE SOUND WILL BE DISABLED
-				this.soundEnabled = false;
-
-				// SHOWING THE SOUND OFF ICON
-				this.actionsSoundHandlerOff.visible = true;
-
-				// HIDING THE SOUND ON ICON
-				this.actionsSoundHandlerOn.visible = false;
-
-				// CHECKING IF THE MUSIC PLAYER IS CREATED
-				if (this.musicPlayer!=null)
-					{
-					// PAUSING THE BACKGROUND MUSIC
-					this.musicPlayer.pause();
-					}
-				}
 			},this)
 
 		// ADDING THE SOUND OFF IMAGE
@@ -298,6 +298,7 @@ VirtualPet.Game.prototype = {
 		this.actionsSoundHandlerOn = game.add.sprite(570, 10, "soundHandler");
 		this.actionsSoundHandlerOn.visible = false;
 
+		// ADDING THE DOG PLATE HANDLER
 		this.actionsDogPlate = game.add.sprite(635, 0, "");
 		this.actionsDogPlate.width = 65;
 		this.actionsDogPlate.height = 55;
@@ -331,9 +332,15 @@ VirtualPet.Game.prototype = {
 		// ADDING THE DOG PLATE FOOD IMAGE
 		this.actionsDogPlateImgFood = game.add.sprite(645, 11.3, "dogPlateFood");
 
+		// ADDING THE DISC HANDLER
 		this.actionsDisc = game.add.sprite(725, 0, "");
 		this.actionsDisc.width = 65;
 		this.actionsDisc.height = 55;
+		this.actionsDisc.inputEnabled = true;
+		this.actionsDisc.events.onInputUp.add(function()
+			{
+
+			}, this);
 
 		// ADDING THE DISC IMAGE
 		this.actionsDiscImg = game.add.sprite(725, -5, "discImg");
