@@ -136,6 +136,7 @@ VirtualPet.Game = function (game)
 
 	this.actionsContainer = null;
 	this.actionsBackground = null;
+	this.actionsSoundHandler = null;
 	this.actionsDogPlate = null;
 	this.actionsDogPlateFood = null;
 	this.actionsDisc = null;
@@ -238,62 +239,68 @@ VirtualPet.Game.prototype = {
 		this.actionsBackground.drawRoundedRect(0, -10, 300, 61.5, 10);
 		this.actionsContainer.addChild(this.actionsBackground);
 
-		// ADDING THE SOUND OFF IMAGE
-		this.actionsSoundOff = game.add.sprite(20, 10, "soundHandler");
-		this.actionsSoundOff.filters = [this.grayFilter];
-		this.actionsSoundOff.inputEnabled = true;
-		this.actionsSoundOff.events.onInputUp.add(function()
+		// ADDING THE SOUND HANDLER
+		this.actionsSoundHandler = game.add.sprite(0, 0, "");
+		this.actionsSoundHandler.width = 65;
+		this.actionsSoundHandler.height = 55;
+		this.actionsSoundHandler.inputEnabled = true;
+		this.actionsSoundHandler.events.onInputUp.add(function()
 			{
-			// SETTING THAT THE SOUND WILL BE ENABLED
-			this.soundEnabled = true;
-
-			// SHOWING THE SOUND ON ICON
-			this.actionsSoundOn.visible = true;
-
-			// HIDING THE SOUND OFF ICON
-			this.actionsSoundOff.visible = false;
-
-			// CHECKING IF THE MUSIC PLAYER IS NOT CREATED
-			if (this.musicPlayer==null)
+			if (this.soundEnabled==false)
 				{
-				// SETTING THE AUDIO FILE THAT WILL BE PLAYED
-				this.musicPlayer = this.add.audio("backgroundMusic");
+				// SETTING THAT THE SOUND WILL BE ENABLED
+				this.soundEnabled = true;
 
-				// SETTING THAT THE MUSIC WILL BE LOOPING
-				this.musicPlayer.loop = true;
+				// SHOWING THE SOUND ON ICON
+				this.actionsSoundOn.visible = true;
 
-				// SETTING THE AUDIO VOLUME
-				this.musicPlayer.volume = 0.35;
+				// HIDING THE SOUND OFF ICON
+				this.actionsSoundOff.visible = false;
+
+				// CHECKING IF THE MUSIC PLAYER IS NOT CREATED
+				if (this.musicPlayer==null)
+					{
+					// SETTING THE AUDIO FILE THAT WILL BE PLAYED
+					this.musicPlayer = this.add.audio("backgroundMusic");
+
+					// SETTING THAT THE MUSIC WILL BE LOOPING
+					this.musicPlayer.loop = true;
+
+					// SETTING THE AUDIO VOLUME
+					this.musicPlayer.volume = 0.35;
+					}
+
+				// PLAYING THE BACKGROUND MUSIC
+				this.musicPlayer.play();
 				}
+				else
+				{
+				// SETTING THAT THE SOUND WILL BE DISABLED
+				this.soundEnabled = false;
 
-			// PLAYING THE BACKGROUND MUSIC
-			this.musicPlayer.play();
+				// SHOWING THE SOUND OFF ICON
+				this.actionsSoundOff.visible = true;
+
+				// HIDING THE SOUND ON ICON
+				this.actionsSoundOn.visible = false;
+
+				// CHECKING IF THE MUSIC PLAYER IS CREATED
+				if (this.musicPlayer!=null)
+					{
+					// PAUSING THE BACKGROUND MUSIC
+					this.musicPlayer.pause();
+					}
+				}
 			},this)
-		this.actionsContainer.addChild(this.actionsSoundOff);
+		this.actionsContainer.addChild(this.actionsSoundHandler);
+
+		// ADDING THE SOUND OFF IMAGE
+		this.actionsSoundOff = game.add.sprite(570, 10, "soundHandler");
+		this.actionsSoundOff.filters = [this.grayFilter];
 
 		// ADDING THE SOUND ON IMAGE
-		this.actionsSoundOn = game.add.sprite(20, 10, "soundHandler");
+		this.actionsSoundOn = game.add.sprite(570, 10, "soundHandler");
 		this.actionsSoundOn.visible = false;
-		this.actionsSoundOn.inputEnabled = true;
-		this.actionsSoundOn.events.onInputUp.add(function()
-			{
-			// SETTING THAT THE SOUND WILL BE DISABLED
-			this.soundEnabled = false;
-
-			// SHOWING THE SOUND OFF ICON
-			this.actionsSoundOff.visible = true;
-
-			// HIDING THE SOUND ON ICON
-			this.actionsSoundOn.visible = false;
-
-			// CHECKING IF THE MUSIC PLAYER IS CREATED
-			if (this.musicPlayer!=null)
-				{
-				// PAUSING THE BACKGROUND MUSIC
-				this.musicPlayer.pause();
-				}
-			},this)
-		this.actionsContainer.addChild(this.actionsSoundOn);
 
 		// ADDING THE DOG PLATE IMAGE
 		this.actionsDogPlate = game.add.sprite(81, 15, "dogPlate");
