@@ -857,7 +857,7 @@ VirtualPet.Game.prototype = {
 				game.add.tween(game.state.states["VirtualPet.Game"].toastText).to({alpha: 0}, 500, Phaser.Easing.Linear.None, true);
 				}, 3000);
 			}
-		},
+		}
 	};
 
 // CREATING THE GAME INSTANCE
