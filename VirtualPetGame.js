@@ -277,13 +277,13 @@ VirtualPet.Game.prototype = {
 				// CHECKING IF THE MUSIC PLAYER IS NOT CREATED
 				if (this.musicPlayer==null)
 					{
-					// SETTING THE AUDIO FILE THAT WILL BE PLAYED
+					// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS BACKGROUND MUSIC
 					this.musicPlayer = this.add.audio("backgroundMusic");
 
-					// SETTING THAT THE MUSIC WILL BE LOOPING
+					// SETTING THAT THE BACKGROUND MUSIC WILL BE LOOPING
 					this.musicPlayer.loop = true;
 
-					// SETTING THE AUDIO VOLUME
+					// SETTING THE BACKGROUND MUSIC VOLUME
 					this.musicPlayer.volume = 0.35;
 					}
 
