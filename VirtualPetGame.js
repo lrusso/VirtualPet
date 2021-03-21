@@ -461,7 +461,7 @@ VirtualPet.Game.prototype = {
 		this.dogHouseCover.visible = false;
 		},
 
-	render: function ()
+	update: function ()
 		{
 		// MOVING THE CLOUDS
 		if (this.cloud1.x>0){this.cloud1.x = this.cloud1.x - 0.25;}else{this.cloud1.x = 800;}
@@ -874,7 +874,7 @@ VirtualPet.Game.prototype = {
 	};
 
 // CREATING THE GAME INSTANCE
-var config = {width: 800, height: 450, renderer: Phaser.WEBGL, parent: "content", disableVisibilityChange: true};
+var config = {width: 800, height: 450, renderer: Phaser.WEBGL, parent: "content", disableVisibilityChange: false};
 var game = new Phaser.Game(config);
 
 // CREATING THE STATES
