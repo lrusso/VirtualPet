@@ -894,7 +894,7 @@ VirtualPet.Game.prototype = {
 	actionTongue: function()
 		{
 		this.dogSprite.animations.play("tongue", 6, false);
-		},
+		}
 	};
 
 // CREATING THE GAME INSTANCE
