@@ -950,6 +950,7 @@ VirtualPet.Game.prototype = {
 					// STOPPING THE SNORING AUDIO
 					this.audioPlayer.pause();
 					}
+
 				// SETTING THAT THE DOG IS NOT SLEEPING
 				this.dogSleeping = false;
 
