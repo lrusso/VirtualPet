@@ -874,8 +874,8 @@ VirtualPet.Game.prototype = {
 		// CHECKING IF THE DOG IS DOING SOMETHING
 		if (this.isDogInAction()==false && this.isDogWalking()==true)
 			{
-			// CHECKING IF THE DOG IS LOCATED WITHIN THE DOG HOUSE
-			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==294 && this.dogFood.alpha==1)
+			// CHECKING IF THE DOG IS LOCATED AT THE DOG PLATE
+			if (this.dogSprite.y==this.gardenTopLimit && ((this.dogSprite.animations.currentAnim.name=="walk_left" && this.dogSprite.x==290) || (this.dogSprite.animations.currentAnim.name=="walk_right" && this.dogSprite.x==215)) && this.dogFood.alpha==1)
 				{
 				// SETTING THAT THE DOG WILL BE INCREASING
 				this.healthMustIncrease = true;
