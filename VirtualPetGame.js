@@ -160,23 +160,24 @@ VirtualPet.Game = function (game)
 	this.cloud4 = null;
 	this.background = null;
 
-	this.gardenTopLimit = 185;
-	this.gardenBottomLimit = 260;
-	this.gardenLeftLimit = 50;
-	this.gardenRightLimit = 550;
+	this.gardenTopLimit = null;
+	this.gardenBottomLimit = null;
+	this.gardenLeftLimit = null;
+	this.gardenRightLimit = null;
 
+	this.dogFood = null;
 	this.dogSprite = null;
-	this.dogMovingUp = false;
-	this.dogMovingDown = false;
-	this.dogSleeping = false;
-	this.dogSleepingSince = -1;
-	this.dogTongue = false;
+	this.dogMovingUp = null;
+	this.dogMovingDown = null;
+	this.dogSleeping = null;
+	this.dogSleepingSince = null;
+	this.dogTongue = null;
 	this.dogTongueHandler = null;
-	this.dogTongueLastWalkingLeft = false;
-	this.dogTongueLastWalkingRight = false;
-	this.dogTongueLastTimeAt = -1;
-	this.dogWalkingSpeed = 1;
-	this.dogWalkingFastUntil = -1;
+	this.dogTongueLastWalkingLeft = null;
+	this.dogTongueLastWalkingRight = null;
+	this.dogTongueLastTimeAt = null;
+	this.dogWalkingSpeed = null;
+	this.dogWalkingFastUntil = null;
 
 	this.dogHouseCover = null;
 
@@ -186,12 +187,12 @@ VirtualPet.Game = function (game)
 	this.healthEmpty = null;
 	this.healthMask = null;
 	this.healthValue = null;
-	this.healthValueIncreasing = 0.10;
-	this.healthValueMax = 1.21;
+	this.healthValueIncreasing = null;
+	this.healthValueMax = null;
 	this.healthCircle = null;
 	this.healthIcon = null;
-	this.healthMustDecrease = true;
-	this.healthMustIncrease = false;
+	this.healthMustDecrease = null;
+	this.healthMustIncrease = null;
 	this.healthMustIncreaseTo = null;
 	this.healthClock = null;
 
@@ -207,9 +208,9 @@ VirtualPet.Game = function (game)
 
 	this.musicPlayer = null;
 	this.audioPlayer = null;
-	this.audioPlayerNewBarkUntil = -1;
+	this.audioPlayerNewBarkUntil = null;
 
-	this.soundEnabled = false;
+	this.soundEnabled = null;
 
 	// SCALING THE CANVAS SIZE FOR THE GAME
 	function resizeF()
@@ -231,6 +232,65 @@ VirtualPet.Game.prototype = {
 
 	init: function()
 		{
+		this.grayFilter = null;
+
+		this.cloud1 = null;
+		this.cloud2 = null;
+		this.cloud3 = null;
+		this.cloud4 = null;
+		this.background = null;
+
+		this.gardenTopLimit = 185;
+		this.gardenBottomLimit = 260;
+		this.gardenLeftLimit = 50;
+		this.gardenRightLimit = 550;
+
+		this.dogFood = null;
+		this.dogSprite = null;
+		this.dogMovingUp = false;
+		this.dogMovingDown = false;
+		this.dogSleeping = false;
+		this.dogSleepingSince = -1;
+		this.dogTongue = false;
+		this.dogTongueHandler = null;
+		this.dogTongueLastWalkingLeft = false;
+		this.dogTongueLastWalkingRight = false;
+		this.dogTongueLastTimeAt = -1;
+		this.dogWalkingSpeed = 1;
+		this.dogWalkingFastUntil = -1;
+
+		this.dogHouseCover = null;
+
+		this.healthContainer = null;
+		this.healthBorder1 = null;
+		this.healthBorder2 = null;
+		this.healthEmpty = null;
+		this.healthMask = null;
+		this.healthValue = null;
+		this.healthValueIncreasing = 0.10;
+		this.healthValueMax = 1.21;
+		this.healthCircle = null;
+		this.healthIcon = null;
+		this.healthMustDecrease = true;
+		this.healthMustIncrease = false;
+		this.healthMustIncreaseTo = null;
+		this.healthClock = null;
+
+		this.actionsBackground = null;
+		this.actionsSoundHandler = null;
+		this.actionsSoundHandlerOff = null;
+		this.actionsSoundHandlerOn = null;
+		this.actionsDogPlate = null;
+		this.actionsDogPlateImg = null;
+		this.actionsDogPlateImgFood = null;
+		this.actionsDisc = null;
+		this.actionsDiscImg = null;
+
+		this.musicPlayer = null;
+		this.audioPlayer = null;
+		this.audioPlayerNewBarkUntil = -1;
+
+		this.soundEnabled = false;
 		},
 
 	create: function()
@@ -369,24 +429,15 @@ VirtualPet.Game.prototype = {
 		this.actionsDogPlate.inputEnabled = true;
 		this.actionsDogPlate.events.onInputUp.add(function()
 			{
-			// SETTING THAT THE DOG WILL BE INCREASING
-			this.healthMustIncrease = true;
-			this.healthMustDecrease = false;
-
-			// SETTING THAT THE DOG PLATE AND DOG PLATE FOOD IMAGE WILL BE USING A GRAY FILTER
-			this.actionsDogPlateImg.filters = [this.grayFilter];
-			this.actionsDogPlateImgFood.filters = [this.grayFilter];
-
-			// CHECKING IF THE INCREASING OF THE DOG HEALTH IS NOT GREATER THAN THE MAX HEALTH VALUE
-			if (this.healthValue.width + this.healthValueIncreasing < this.healthValueMax)
+			// CHECKING IF THE DOG FOOD IS VISIBLE
+			if (this.dogFood.alpha==0)
 				{
-				// UPDATING THE INCREASE HEALTH VALUE WITH A SMALL INCREASE
-				this.healthMustIncreaseTo = this.healthValue.width + this.healthValueIncreasing;
-				}
-				else
-				{
-				// UPDATING THE INCREASE HEALTH VALUE TO THE MAX VALUE POSSIBLE
-				this.healthMustIncreaseTo = this.healthValueMax;
+				// SHOWING THE DOG FOOD
+				this.dogFood.alpha = 1;
+
+				// DISABLING THE DOG PLATE IMAGE AND FOOD
+				this.actionsDogPlateImg.filters = [this.grayFilter];
+				this.actionsDogPlateImgFood.filters = [this.grayFilter];
 				}
 			}, this);
 
@@ -395,6 +446,10 @@ VirtualPet.Game.prototype = {
 
 		// ADDING THE DOG PLATE FOOD IMAGE
 		this.actionsDogPlateImgFood = game.add.sprite(645, 11.3, "imageDogPlateFood");
+
+		// DISABLING THE DOG PLATE IMAGE AND FOOD
+		this.actionsDogPlateImg.filters = [this.grayFilter];
+		this.actionsDogPlateImgFood.filters = [this.grayFilter];
 
 		// ADDING THE DISC HANDLER
 		this.actionsDisc = game.add.sprite(725, 0, "imageBlock");
@@ -408,6 +463,9 @@ VirtualPet.Game.prototype = {
 
 		// ADDING THE DISC IMAGE
 		this.actionsDiscImg = game.add.sprite(725, -5, "imageDisc");
+
+		// ADDING THE DOG PLATE FOOD IMAGE
+		this.dogFood = game.add.sprite(294, 265, "imageDogPlateFood");
 
 		// ADDING THE DOG SPRITE
 		this.dogSprite = game.add.sprite(300, this.gardenBottomLimit, "imageDogSpritesheet");
@@ -641,6 +699,9 @@ VirtualPet.Game.prototype = {
 			else if (randomValue<=0.5)		{this.checkAvailabilityForUpOrDown()}
 			else if (randomValue<=99)		{this.checkAvailabilityForSleep()}
 
+			// CHECKING IF THE DOG CAN EAT
+			this.checkAvailabilityForEat();
+
 			// CHECKING IF THE DOG MUST BE WALKING UP
 			if (this.dogMovingUp==true)
 				{
@@ -806,6 +867,40 @@ VirtualPet.Game.prototype = {
 
 					// SHOWING THE DOG HOUSE COVER
 					this.dogHouseCover.visible = true;
+					}
+				}
+			}
+		},
+
+	checkAvailabilityForEat: function()
+		{
+		// CHECKING IF THE DOG IS DOING SOMETHING
+		if (this.isDogInAction()==false && this.isDogWalking()==true)
+			{
+			// CHECKING IF THE DOG IS LOCATED WITHIN THE DOG HOUSE
+			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==295 && this.dogFood.alpha==1)
+				{
+				// SETTING THAT THE DOG WILL BE INCREASING
+				this.healthMustIncrease = true;
+				this.healthMustDecrease = false;
+
+				// HIDING THE DOG FOOD
+				this.dogFood.alpha = 0;
+
+				// ENABLING THE DOG FOOD
+				this.actionsDogPlateImg.filters = null;
+				this.actionsDogPlateImgFood.filters = null;
+
+				// CHECKING IF THE INCREASING OF THE DOG HEALTH IS NOT GREATER THAN THE MAX HEALTH VALUE
+				if (this.healthValue.width + this.healthValueIncreasing < this.healthValueMax)
+					{
+					// UPDATING THE INCREASE HEALTH VALUE WITH A SMALL INCREASE
+					this.healthMustIncreaseTo = this.healthValue.width + this.healthValueIncreasing;
+					}
+					else
+					{
+					// UPDATING THE INCREASE HEALTH VALUE TO THE MAX VALUE POSSIBLE
+					this.healthMustIncreaseTo = this.healthValueMax;
 					}
 				}
 			}
