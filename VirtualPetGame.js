@@ -433,7 +433,7 @@ VirtualPet.Game.prototype = {
 			if (this.dogFood.alpha==0)
 				{
 				// SHOWING THE DOG FOOD
-				this.dogFood.alpha = 1;
+				game.add.tween(game.state.states["VirtualPet.Game"].dogFood).to({alpha: 1}, 250, Phaser.Easing.Linear.None, true);
 
 				// DISABLING THE DOG PLATE IMAGE AND FOOD
 				this.actionsDogPlateImg.filters = [this.grayFilter];
@@ -446,10 +446,6 @@ VirtualPet.Game.prototype = {
 
 		// ADDING THE DOG PLATE FOOD IMAGE
 		this.actionsDogPlateImgFood = game.add.sprite(645, 11.3, "imageDogPlateFood");
-
-		// DISABLING THE DOG PLATE IMAGE AND FOOD
-		this.actionsDogPlateImg.filters = [this.grayFilter];
-		this.actionsDogPlateImgFood.filters = [this.grayFilter];
 
 		// ADDING THE DISC HANDLER
 		this.actionsDisc = game.add.sprite(725, 0, "imageBlock");
@@ -466,6 +462,7 @@ VirtualPet.Game.prototype = {
 
 		// ADDING THE DOG PLATE FOOD IMAGE
 		this.dogFood = game.add.sprite(294, 265, "imageDogPlateFood");
+		this.dogFood.alpha = 0;
 
 		// ADDING THE DOG SPRITE
 		this.dogSprite = game.add.sprite(300, this.gardenBottomLimit, "imageDogSpritesheet");
@@ -878,7 +875,7 @@ VirtualPet.Game.prototype = {
 		if (this.isDogInAction()==false && this.isDogWalking()==true)
 			{
 			// CHECKING IF THE DOG IS LOCATED WITHIN THE DOG HOUSE
-			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==295 && this.dogFood.alpha==1)
+			if (this.dogSprite.y==this.gardenTopLimit && this.dogSprite.x==294 && this.dogFood.alpha==1)
 				{
 				// SETTING THAT THE DOG WILL BE INCREASING
 				this.healthMustIncrease = true;
