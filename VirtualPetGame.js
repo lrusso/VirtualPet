@@ -10,6 +10,10 @@ function isWebGLAvailable(){if(window.WebGLRenderingContext){for(var e=document.
 // isMobileDevice.js
 function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
 
+var GAME_SOUND_ENABLED = false;
+
+var MUSIC_PLAYER = null;
+
 var VirtualPet = {};
 
 VirtualPet.Preloader = function(){};
@@ -212,11 +216,12 @@ VirtualPet.Game = function (game)
 	this.actionsDisc = null;
 	this.actionsDiscImg = null;
 
-	this.musicPlayer = null;
 	this.audioPlayer = null;
 	this.audioPlayerNewBarkUntil = null;
 
-	this.soundEnabled = null;
+	this.clickTimestamp = null;
+	this.clickPositionX = null;
+	this.clickPositionY = null;
 
 	// SCALING THE CANVAS SIZE FOR THE GAME
 	function resizeF()
@@ -292,11 +297,12 @@ VirtualPet.Game.prototype = {
 		this.actionsDisc = null;
 		this.actionsDiscImg = null;
 
-		this.musicPlayer = null;
 		this.audioPlayer = null;
 		this.audioPlayerNewBarkUntil = -1;
 
-		this.soundEnabled = false;
+		this.clickTimestamp = null;
+		this.clickPositionX = null;
+		this.clickPositionY = null;
 		},
 
 	create: function()
@@ -370,13 +376,19 @@ VirtualPet.Game.prototype = {
 		this.actionsSoundHandler.width = 65;
 		this.actionsSoundHandler.height = 55;
 		this.actionsSoundHandler.inputEnabled = true;
+		this.actionsSoundHandler.events.onInputDown.add(function(){if(this.clickTimestamp==null){this.clickTimestamp=this.getCurrentTime();this.clickPositionX=this.game.input.activePointer.position.x;this.clickPositionY=this.game.input.activePointer.position.y;}},this);
 		this.actionsSoundHandler.events.onInputUp.add(function()
 			{
+			// REJECTING ANY SLIDE AND LONG PRESS EVENT - BUGFIX FOR SAFARI ON IOS FOR ENABLING THE AUDIO CONTEXT
+			if (Math.abs(this.game.input.activePointer.position.x-this.clickPositionX)>=25){this.clickTimestamp=null;return;}
+			if (Math.abs(this.game.input.activePointer.position.y-this.clickPositionY)>=25){this.clickTimestamp=null;return;}
+			if (this.getCurrentTime()-this.clickTimestamp>=500){this.clickTimestamp=null;return;}
+
 			// CHECKING IF THE SOUND IS ENABLED
-			if (this.soundEnabled==true)
+			if (GAME_SOUND_ENABLED==true)
 				{
 				// SETTING THAT THE SOUND WILL BE DISABLED
-				this.soundEnabled = false;
+				GAME_SOUND_ENABLED = false;
 
 				// SHOWING THE SOUND OFF ICON
 				this.actionsSoundHandlerOff.visible = true;
@@ -385,10 +397,13 @@ VirtualPet.Game.prototype = {
 				this.actionsSoundHandlerOn.visible = false;
 
 				// CHECKING IF THE MUSIC PLAYER IS CREATED
-				if (this.musicPlayer!=null)
+				if (MUSIC_PLAYER!=null)
 					{
-					// PAUSING THE BACKGROUND MUSIC
-					this.musicPlayer.pause();
+					// PAUSING THE BACKGROUND MUSIC PLAYER
+					MUSIC_PLAYER.pause();
+
+					// DESTROYING THE BACKGROUND MUSIC PLAYER
+					MUSIC_PLAYER.destroy();
 					}
 
 				// CHECKING IF THE AUDIO PLAYER IS CREATED
@@ -401,7 +416,7 @@ VirtualPet.Game.prototype = {
 				else
 				{
 				// SETTING THAT THE SOUND WILL BE ENABLED
-				this.soundEnabled = true;
+				GAME_SOUND_ENABLED = true;
 
 				// SHOWING THE SOUND ON ICON
 				this.actionsSoundHandlerOn.visible = true;
@@ -409,23 +424,32 @@ VirtualPet.Game.prototype = {
 				// HIDING THE SOUND OFF ICON
 				this.actionsSoundHandlerOff.visible = false;
 
-				// CHECKING IF THE MUSIC PLAYER IS NOT CREATED
-				if (this.musicPlayer==null)
+				// CHECKING IF THE MUSIC PLAYER IS CREATED
+				if (MUSIC_PLAYER!=null)
 					{
-					// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS BACKGROUND MUSIC
-					this.musicPlayer = this.add.audio("backgroundMusic");
+					// PAUSING THE BACKGROUND MUSIC PLAYER
+					MUSIC_PLAYER.pause();
 
-					// SETTING THAT THE BACKGROUND MUSIC WILL BE LOOPING
-					this.musicPlayer.loop = true;
-
-					// SETTING THE BACKGROUND MUSIC VOLUME
-					this.musicPlayer.volume = 0.35;
+					// DESTROYING THE BACKGROUND MUSIC PLAYER
+					MUSIC_PLAYER.destroy();
 					}
 
+				// SETTING THE AUDIO FILE THAT WILL BE PLAYED AS BACKGROUND MUSIC
+				MUSIC_PLAYER = this.add.audio("backgroundMusic");
+
+				// SETTING THAT THE BACKGROUND MUSIC WILL BE LOOPING
+				MUSIC_PLAYER.loop = true;
+
+				// SETTING THE BACKGROUND MUSIC VOLUME
+				MUSIC_PLAYER.volume = 0.35;
+
 				// PLAYING THE BACKGROUND MUSIC
-				this.musicPlayer.play();
+				MUSIC_PLAYER.play();
 				}
-			},this)
+
+			// CLEARING THE CLICK TIMESTAMP VALUE
+			this.clickTimestamp = null;
+			},this);
 
 		// ADDING THE SOUND OFF IMAGE
 		this.actionsSoundHandlerOff = game.add.sprite(570, 10, "imageSound");
@@ -493,7 +517,7 @@ VirtualPet.Game.prototype = {
 				if (this.audioPlayerNewBarkUntil<this.getCurrentTime())
 					{
 					// CHECKING IF THE SOUND IS ENABLED
-					if (this.soundEnabled==true)
+					if (GAME_SOUND_ENABLED==true)
 						{
 						// PLAYING THE BARK SOUND
 						this.audioPlayer = this.add.audio("soundDogBark");
@@ -815,7 +839,7 @@ VirtualPet.Game.prototype = {
 				this.actionTongue();
 
 				// CHECKING IF THE SOUND IS ENABLED
-				if (this.soundEnabled==true)
+				if (GAME_SOUND_ENABLED==true)
 					{
 					// PLAYING THE PANTING SOUND
 					this.audioPlayer = this.add.audio("soundDogPanting");
@@ -887,7 +911,7 @@ VirtualPet.Game.prototype = {
 					this.dogHouseCover.visible = true;
 
 					// CHECKING IF THE SOUND IS ENABLED
-					if (this.soundEnabled==true)
+					if (GAME_SOUND_ENABLED==true)
 						{
 						// PLAYING THE SNORING SOUND
 						this.audioPlayer = this.add.audio("soundDogSnoring");
@@ -909,7 +933,7 @@ VirtualPet.Game.prototype = {
 			if (this.dogSprite.y==this.gardenTopLimit && ((this.dogSprite.animations.currentAnim.name=="walk_left" && this.dogSprite.x==290) || (this.dogSprite.animations.currentAnim.name=="walk_right" && this.dogSprite.x==215)) && this.dogFood.alpha==1)
 				{
 				// CHECKING IF THE SOUND IS ENABLED
-				if (this.soundEnabled==true)
+				if (GAME_SOUND_ENABLED==true)
 					{
 					// PLAYING THE EAT SOUND
 					this.audioPlayer = this.add.audio("soundDogEat");
